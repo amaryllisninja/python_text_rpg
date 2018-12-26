@@ -13,6 +13,10 @@ def lootMon(charName, monster):
     tempDeadMonsters = pickle.load(tempPickleDeadMon)
     tempPickleDeadMon.close()
 
+    #Check for duplicates of dead and looted monsters
+    deadMonDups = 0
+    lootedMonDups = 0
+
     if os.path.isfile('tempPickleLootedMon.pkl') == True:
         #Get current looted monsters in room for character
         tempPickleLootedMon = open("tempPickleLootedMon.pkl","rb")
@@ -31,51 +35,20 @@ def lootMon(charName, monster):
         tempPickleLootedMon.close()
         #print("Pickle didn't exist.", tempLootedMonsters)
 
-    
-    if monster in tempDeadMonsters[room] and monster not in tempLootedMonsters[room]:
-        percent = gMon.monsterDropPercentage[monster]
-        percent = int(percent[0])
-        percentRoll = roll.rollDice(1, 100)
-        droppedList = []        
-        
-        if percentRoll <= percent:
-            #print("You get an item!")
-            monItems = gMon.monsterItems[monster]
-            numMonItems = len(monItems)
-            chanceOfEachItem = int((1/numMonItems)*100)
-            
-            for c in range(0, numMonItems):
-                chanceToGetItem = roll.rollDice(1, 100)
-                #print(monItems, numMonItems, chanceOfEachItem, chanceToGetItem)
-                if chanceToGetItem >= chanceOfEachItem*c and chanceToGetItem <= chanceOfEachItem*(c+1):
-                    itemObtained = monItems[c]
-                    droppedList.append(itemObtained)
-                else:
-                    #print("Didn't get item number " + str(c))
-                    pass
-                c += 1
-            print("On " + monster + ", you found:")
-            print('/n'.join(droppedList))
-            #print(tempLootedMonsters, room, len(tempLootedMonsters))
-            #print(tempLootedMonsters)
+    for c in range(len(tempDeadMonsters[room])):
+        if tempDeadMonsters[room][c] == monster:
+            deadMonDups = deadMonDups + 1
         else:
-            print("You found nothing on the " + monster + ".")
-        tempLootedMonsters[room].append(monster)
-        tempPickleLootedMon = open("tempPickleLootedMon.pkl", 'bw') #Add monster to 'looted' list
-        pickle.dump(tempLootedMonsters,tempPickleLootedMon)
-        tempPickleLootedMon.close()
+            pass
+    for c in range(len(tempLootedMonsters[room])):
+        if tempLootedMonsters[room][c] == monster:
+            lootedMonDups = lootedMonDups + 1
+        else:
+            pass
+    
 
-        charInvTemp = open("charInvTemp.pkl","rb")
-        inventory = pickle.load(charInvTemp)
-        charInvTemp.close()
-
-        for item in droppedList:
-            inventory.append(item)
-        #print(inventory)
-        charInvTemp = open("charInvTemp.pkl","bw")
-        pickle.dump(inventory,charInvTemp)
-        charInvTemp.close()
-
+    if monster in tempDeadMonsters[room] and monster not in tempLootedMonsters[room]:
+        getLoot(monster, tempLootedMonsters, room)
     elif monster not in tempDeadMonsters[room]:
         print("There is no dead " + monster + " here.")
 
@@ -83,12 +56,60 @@ def lootMon(charName, monster):
         print("Why don\'t you try \'getting\' and item?")
         time.sleep(1)
         
-    elif monster in tempLootedMonsters[room]:
-        print("You have already looted the " + monster + ".")
+    elif monster in tempLootedMonsters[room]: 
+        if monster in tempLootedMonsters[room] and deadMonDups != lootedMonDups:
+            getLoot(monster, tempLootedMonsters, room)
+        elif monster in tempLootedMonsters[room] and deadMonDups == lootedMonDups and lootedMonDups > 1:
+            print("You have already looted the " + monster + "s.")
+        else:
+            print("You have already looted the " + monster + ".")
 
     else:
         print("There was an error finding a monster to loot.")
             
 
+def getLoot(monster, tempLootedMonsters, room):
+    percent = gMon.monsterDropPercentage[monster]
+    percent = int(percent[0])
+    percentRoll = roll.rollDice(1, 100)
+    droppedList = []        
+    
+    if percentRoll <= percent:
+        #print("You get an item!")
+        monItems = gMon.monsterItems[monster]
+        numMonItems = len(monItems)
+        chanceOfEachItem = int((1/numMonItems)*100)
+        
+        for c in range(0, numMonItems):
+            chanceToGetItem = roll.rollDice(1, 100)
+            #print(monItems, numMonItems, chanceOfEachItem, chanceToGetItem)
+            if chanceToGetItem >= chanceOfEachItem*c and chanceToGetItem <= chanceOfEachItem*(c+1):
+                itemObtained = monItems[c]
+                droppedList.append(itemObtained)
+            else:
+                #print("Didn't get item number " + str(c))
+                pass
+            c += 1
+        print("On " + monster + ", you found:")
+        print('/n'.join(droppedList))
+        #print(tempLootedMonsters, room, len(tempLootedMonsters))
+        #print(tempLootedMonsters)
+    else:
+        print("You found nothing on the " + monster + ".")
+    tempLootedMonsters[room].append(monster)
+    tempPickleLootedMon = open("tempPickleLootedMon.pkl", 'bw') #Add monster to 'looted' list
+    pickle.dump(tempLootedMonsters,tempPickleLootedMon)
+    tempPickleLootedMon.close()
+
+    charInvTemp = open("charInvTemp.pkl","rb")
+    inventory = pickle.load(charInvTemp)
+    charInvTemp.close()
+
+    for item in droppedList:
+        inventory.append(item)
+    #print(inventory)
+    charInvTemp = open("charInvTemp.pkl","bw")
+    pickle.dump(inventory,charInvTemp)
+    charInvTemp.close()
 
 

@@ -26,9 +26,9 @@ def isEquippable(globalItem, action):
             globalType = gameItems.itemType[globalItem]
             if globalType in equippedType:
                 if globalItem[:1] == ['a', 'e', 'i', 'o', 'u']:
-                    print("You are already " + action + "ing an " + globalItem)
+                    print("You are already " + action + "ing an " + globalType)
                 else:
-                    print("You are already " + action + "ing a " + globalItem)
+                    print("You are already " + action + "ing a " + globalType)
             elif globalType not in equippedType:
                 characterEquip.remove(globalItem)               #Remove equipped item from inventory pickle
                 if characterEquip == [] or characterEquip == ():

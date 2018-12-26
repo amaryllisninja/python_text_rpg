@@ -192,15 +192,16 @@ To the West is the exit.''',
     18:'''You find yourself at the Southern entrance to a small town. It is almost cliched with
 how quaint it is. Townsfolk wander around on the streets, going about their daily business.
 To the North is the center of town. To the East is the Bakery. To the South is the path outside
-of town. To the West is path to the moutains.''',
+of town. To the West is the Southern Residences.''',
     19:'''There are quaint little cottages all along this side of town. You see children running
 around and playing, parents watching them through the windows, and little flowers blooming
 everywhere.
 To the North are the Western Residences. To the East is the Southern entrace to town.''',
     20:'''This gravel path crunches under your feet. You can hear the sounds of the town, but
 just barely.
-To the North is the Southern entrance to town. To the South is a lonely path. To the West is the path to the mountains.''',
-    21:'''Before you and to the West is a lofty mountain range. The mountains are coated with
+To the North is the Southern entrance to town. To the South is a lonely path. To the West is the 
+path to the mountains.''',
+    21:'''Before you is a lofty mountain range. The mountains are coated with
 snow, looking cold and gray. The sight of these make you shiver just thinking about being up
 there.
 To the East is the path outside of town. To the West are the mountains.''',
@@ -510,7 +511,7 @@ You are hopelessly lost.''',
     123:'''You find yourself surrounded by trees, vines, and brambles. You can't tell from which
 way you came or which way you should go. There is barely any light and you have lost any signs of a path.
 You are hopelessly lost.''',
-    124:'''You are at the exit of the Forest of the Lost. A path appears in front of you.
+    124:'''A path appears in front of you. You are at the exit of the Forest of the Lost. 
 To the North is the Forest of the Lost, to the South is a dusty trail.'''
 }
 
@@ -538,7 +539,7 @@ directionsOpen = {
     20:'n x s w',
     21:'x e x x',
     22:'x e x x ',
-    23:'x x s w',
+    23:'x x s x',
     24:'n x s x',
     25:'n x s x',
     26:'n x s x',
@@ -767,7 +768,7 @@ roomsConnectedTo = {
     121:'113 x x 120',
     122:'114 x x x',
     123:'115 x 124 x',
-    124:'123 x s x'
+    124:'123 x 23 x'
 }
 
 roomItems = (

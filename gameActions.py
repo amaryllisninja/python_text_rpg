@@ -491,7 +491,13 @@ def checkAction(name):
             print("Loot what?")
             time.sleep(1)
         else:
-            loot.lootMon(name, action[1])
+            monster = action[1]
+            i = 2
+            while i < len(action) - 1:
+                monster += ' '
+                monster += action[i]
+                i = i + 1
+            loot.lootMon(name, monster)
 
     #Process to follow for 'talk'
     elif action[0] in cmdList.talkCmdList:
