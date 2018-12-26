@@ -20,7 +20,6 @@ def attack(action, charName):
     magic[0] = int(magic[0])
     magic[2] = int(magic[2])
     deathCnt = charFile["deathCount"]       #Load death count
-    deathCnt = int(deathCnt)
     profession = charFile["profession"]     #Load character profession
     charFile.close()                        #Close save flie 
     
@@ -128,7 +127,11 @@ def attack(action, charName):
                         itemChoose = input()
                         if itemChoose in inventory:
                             if gI.itemType[itemChoose] in gI.useTypes:
-                                uI.useItem(itemChoose)
+                                uI.useItem(itemChoose, charName)
+                                inventory.remove(itemChoose)
+                                charInvTemp = open("charInvTemp.pkl","bw")
+                                pickle.dump(inventory, charInvTemp)
+                                charInvTemp.close()
                                 break
                             else:
                                 print("You cannot use " + itemChoose + " right now.\n")
@@ -139,6 +142,7 @@ def attack(action, charName):
                             atkAction = input()
                         else:
                             print(itemChoose.title() + " is not in your inventory. Please choose another item.\n")
+                        
                     
                     #If fleeing ##############################
                     elif atkAction.lower() == 'flee':
@@ -189,7 +193,7 @@ def attack(action, charName):
                     monDamage = atkRoll(monAtkDice[0], monAtkDice[1], monThaco, monToHit, victim)
                     time.sleep(1)
                     health[0] -= monDamage
-                    inCombat = checkHP(name, health, deathCnt, magic)
+                    inCombat = checkHP(name, health, magic)
 
             #Eliminate negative numbers
             if health[0] < 0:
@@ -215,7 +219,7 @@ def attack(action, charName):
             time.sleep(1)
             
 def thacoCalc(totalAC, dex):
-    #10 + armor bonus + shield bonus + Dexterity modifier #+ size modifier
+    #10 + armor bonus + shield bonus + Dexterity modifier + size modifier
     thaco = 10 + int(totalAC) + statMod[int(dex)]
     return thaco
 
@@ -224,10 +228,10 @@ def rollToHit(stat): # Profession dominant stat
     return toHit
 
 def atkRoll(numDice, atkDice, thaco, toHit, attacker):
-    if thaco > toHit:
+    if thaco < toHit:
         print(attacker.title() + " missed.")
         damage = 0
-    elif thaco <= toHit:
+    elif thaco >= toHit:
         damage = roll.rollDice(numDice, atkDice)
         print(attacker.title() + " hit for " + str(damage) + " points of damage!")
     else:
@@ -284,12 +288,16 @@ def monsterWeaponCheck(monster):
 def monsterAtk(charName, victim):
     pass
 
-def checkHP(person, health, deathCnt, magic):
+def checkHP(person, health, magic):
     print("You are down to " + str(health[0]) + " health points.")
     if health[0] == 0 or health[0] <= 0:
         print("\n\nYou are dead. You feel nothing.\n\n")
-        charFile = shelve.open(person + "SaveFile")       #Save death count
-        charFile["deathCount"] = charIsDead(person, deathCnt, health, magic)
+        health[0] = health[2]                                   #Reset Health to full
+        charFile = shelve.open(person + "SaveFile")
+        oldDeathCnt = int(charFile["deathCount"])               #Update death count
+        newDeathCnt = oldDeathCnt + 1
+        charFile["deathCount"] = newDeathCnt
+        charIsDead(person, newDeathCnt, health, magic)
         charFile.close()
         time.sleep(3)
         inCombat = False
@@ -366,23 +374,25 @@ def checkProfession(profession):
     return mainStat
 
 def charIsDead(person, deathCnt, health, magic):
+    time.sleep(3)
     print("You stand up and look around. You see a tall, dark-haired woman standing")
     print("nearby with an Ankh hanging around her neck. She smiles at you.")
+    time.sleep(3)
     print("\'Hi, there, " + person + ".\' she says.")
-    if deathCnt == 0:
+    if int(deathCnt) == 0:
         print("\'I'm sure you're pretty confused right now, but let me clear things")
         print("up for you: You're dead. It's nothing to be alarmed by. It happens")
         print("to everyone. \nShall we go for a walk?\'")
-    elif deathCnt <= 5:
+    elif int(deathCnt) <= 5:
         response = roll.rollDice(0, len(dialogue.deathLess5)-1)
         print(dialogue.deathLess5[response])
-    elif deathCnt <= 10:
+    elif int(deathCnt) <= 10:
         response = roll.rollDice(0, len(dialogue.deathLess10)-1)
         print(dialogue.deathLess10[response])
-    elif deathCnt <= 15:
+    elif int(deathCnt) <= 15:
         response = roll.rollDice(0, len(dialogue.deathLess15)-1)
         print(dialogue.deathLess15[response])
-    elif deathCnt > 15:
+    elif int(deathCnt) > 15:
         response = roll.rollDice(0, len(dialogue.deathGreater15)-1)
         print(dialogue.deathGreater15[response])
     else:
@@ -393,10 +403,7 @@ def charIsDead(person, deathCnt, health, magic):
     fileLoc = open("tempPickleLoc.pkl","bw")            #Save character location to pickle
     pickle.dump(location,fileLoc)
     fileLoc.close()
-    deathCnt += 1
-    charFile = shelve.open(person + "SaveFile")
-    charFile["deathCount"] = str(deathCnt)
-    charFile.close()
+    print(deathCnt)
 
     time.sleep(3)
     

@@ -78,6 +78,10 @@ def lootMon(charName, monster):
 
     elif monster not in tempDeadMonsters[room]:
         print("There is no dead " + monster + " here.")
+
+    elif monster in gI.itemNames:
+        print("Why don\'t you try \'getting\' and item?")
+        time.sleep(1)
         
     elif monster in tempLootedMonsters[room]:
         print("You have already looted the " + monster + ".")

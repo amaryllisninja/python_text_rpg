@@ -2,6 +2,8 @@
 import rooms, random, time, pickle, shelve, gameItems, loot
 import checkRoom, dialogue, cmdList, equipFuncs, gameMonsters, gameNPCs, atk
 import npcFunctions as npcFunc
+import useItems as uI
+import gameItems as gI
 
 def save(name):
     print("Saving...")
@@ -20,6 +22,11 @@ def save(name):
     charSaveFile["inventory"] = fileInv
     #print(fileInv)
     charInvTemp.close()
+
+    timePickleXP = open("tempPickleXP.pkl", "rb")
+    charXP = pickle.load(timePickleXP)
+    charSaveFile["experience"] = charXP
+    timePickleXP.close()
     
     tempPickleLoc = open("tempPickleLoc.pkl","rb")
     fileLoc = pickle.load(tempPickleLoc)
@@ -89,7 +96,6 @@ def canMove(moveDirection, directionsOpen, roomsConnectedTo, name):
         print("After moving, you are now in " + rooms.roomNames[int(location)] + ".")
     else:
         print("You cannot go that way.")
-        print(moveDirection)
     time.sleep(1)
     return location
 
@@ -198,7 +204,9 @@ def checkAction(name):
             location = pickle.load(tempPickleLoc)
             tempPickleLoc.close()
             if action in inventory:
-                print(gameItems.itemDescriptions[action])
+                for row in range(len(gameItems.itemDescriptions[action])):
+                    print(gameItems.itemDescriptions[action][row])
+                print()
                 time.sleep(1)
             elif action in tempRoomMonsters[location]:
                 print(gameMonsters.monsterDescriptions[action])
@@ -479,7 +487,11 @@ def checkAction(name):
 
     #Process to follow for 'loot'
     elif action[0] in cmdList.lootCmdList:
-        loot.lootMon(name, action[1])
+        if action[1] == '':
+            print("Loot what?")
+            time.sleep(1)
+        else:
+            loot.lootMon(name, action[1])
 
     #Process to follow for 'talk'
     elif action[0] in cmdList.talkCmdList:
@@ -510,7 +522,7 @@ def checkAction(name):
                                " brissles at the sound of your voice.",
                                " shushes you.",
                                " kicks a rock in your general direction."]
-                monNum = random.randint(0, len(monResponse)-1)
+                monNum = random.randint(0, len(monResponse))
                 print(action[2].title() + monResponse[monNum])
             elif action[2] in tempNPCs[location]:
                 npcFunc.interaction(action[2])
@@ -518,9 +530,58 @@ def checkAction(name):
                 print(action[2].title() + " isn\'t in here.")
 
     elif action[0] == 'sell':
-        print("Selling action in development...")
+        tempPickleLoc = open("tempPickleLoc.pkl","rb")
+        location = pickle.load(tempPickleLoc)
+        tempPickleLoc.close()
+        if len(action) >= 4:
+            if action[2] in rooms.roomNPCs[location]:
+                npcFunc.sell(action[2])
+            else:
+                print("That merchant is not here.")
+        else:
+            print("Sell to whom?")
+            
     elif action[0] == 'buy':
-        print("Buying action in development...")
+        tempPickleLoc = open("tempPickleLoc.pkl","rb")
+        location = pickle.load(tempPickleLoc)
+        tempPickleLoc.close()
+        if len(action) >= 4:
+            if action[2] in rooms.roomNPCs[location]:
+                npcFunc.buy(action[2])
+                print(action[2])
+            else:
+                print("That merchant is not here.")
+        else:
+            print("Buy from whom?")
+
+    #Process to follow for 'use', 'eat', or 'drink'
+    elif action[0] in cmdList.useCmdList:
+        charInvTemp = open("charInvTemp.pkl","rb")  #Get items in char. inventory
+        inventory = pickle.load(charInvTemp)
+        charInvTemp.close()
+        if action[1] == '':
+            print(action[0].title() + " what?")
+        else:
+            item = []
+            c = 1
+            while c <= len(action): #Creating 'item' string
+                if action[c] != '':
+                    item.append(action[c])
+                    c += 1
+                elif action[c] == '':
+                    break
+            item = ' '.join(item)    
+            if item in inventory:
+                if gI.itemType[item] in gI.useTypes:
+                    uI.useItem(item, name)
+                    inventory.remove(item)
+                    charInvTemp = open("charInvTemp.pkl","bw")
+                    pickle.dump(inventory, charInvTemp)
+                    charInvTemp.close()
+                else:
+                    print("You cannot use " + item + " right now.\n")
+            else:
+                print("You do not have a " + item + " in your inventory.\n")
 
     #Funny dialogue actions
     elif action[0] == 'snark':

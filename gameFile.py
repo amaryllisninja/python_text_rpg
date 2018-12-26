@@ -9,7 +9,7 @@ name = pickle.load(file)
 time.sleep(2)
 
 print("\n\n\nGame Loading...\n\n\n")
-charFile = shelve.open(name + "SaveFile")           #Load character
+charFile = shelve.open(name.lower().replace(" ", "") + "SaveFile")           #Load character
 location = charFile["location"]                     #Load character location
 characterEquip = charFile["inventory"]              #Load character inventory
 charGold = charFile["gold"]                         #Load character gold
@@ -19,9 +19,6 @@ fileEquipped = charFile["equipped"]                 #Load equipped items
 tempPickleEquipped = open("tempPickleEquipped.pkl","bw")  
 pickle.dump(fileEquipped,tempPickleEquipped)
 tempPickleEquipped.close()
-
-print("Tip: Type HELP if this is your first time playing this game.")
-time.sleep(1)
 
 ####### Reload all values to clear unsaved pickle values #######
 fileHP = open("charHealthTemp.pkl","bw")            #Load HP

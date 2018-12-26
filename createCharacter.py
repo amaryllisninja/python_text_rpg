@@ -2,13 +2,6 @@
 
 import random, time, pickle, shelve, characters, rooms, roll
 
-characterStats = ['strength', 'intelligence', 'dexterity', 'health', 'magic']
-characterEquip = []
-characterEquipped = []
-playState = 'y'
-name = 'name'
-newGold = 1
-
 def welcomePlayer():
     print("Welcome to Amaryllis' character generator!")
     print("In this generator, you can name a character, roll up his stats, and select his profession.")
@@ -17,13 +10,7 @@ def welcomePlayer():
 
 # Create character name
 def characterName():
-    correct = 'y'
-
-    print("What would you like to call your character?")
-    name = input()
-    print("You've named your character " + name + ". Is this correct? (y/n)")
-    correct = input()
-
+    correct = 'n'
     while correct != 'y':
         print("What would you like to call your character?")
         name = input()
@@ -46,16 +33,17 @@ def displayStats(characterStats):
     print("Magic Points: " + characterStats[4])
 
 def rollDice(chatacterStats):
-    reroll = True
-    c = 4
-    while reroll == True:
+    reroll = 'y'
+    rerollAmt = 0
+    while True:
+
         print("Rolling 3d6...")
-        time.sleep(1)
+        time.sleep(2)
         
-        characterStats[0] = random.randint(3, 18)       #Roll str
-        characterStats[1] = random.randint(3, 18)       #Roll int
-        characterStats[2] = random.randint(3, 18)       #Roll dex
-        characterStats[3] = characterStats[0] + characterStats[2]   #Roll HP
+        characterStats[0] = random.randint(3, 18)                       #Roll str
+        characterStats[1] = random.randint(3, 18)                       #Roll int
+        characterStats[2] = random.randint(3, 18)                       #Roll dex
+        characterStats[3] = characterStats[0] + characterStats[2]       #Roll HP
         characterStats[4] = random.randint(1, 6) + characterStats[1]    #Roll MP
 
         characterStats[0] = str(characterStats[0])
@@ -65,21 +53,24 @@ def rollDice(chatacterStats):
         characterStats[4] = str(characterStats[4])
 
         displayStats(characterStats)
+        time.sleep(1)
+        rerollAmt = rerollAmt + 1
+        if rerollAmt <= 2:
+            print("You may roll your stats up to 3 times. \nWould you like to reroll? (y/n) ")
+            pass
+        else:
+            print("You can no longer reroll.")
+            break
+
+        reroll = input()
+        if reroll == 'y':
+            pass
+        elif reroll == 'n':
+            break
+        else:
+            print("Incorrect input.")
+            time.sleep(1)
         
-        for c in range(1, 3):
-            print("You can reroll your stats " + str(c) + " times. Reroll stats? (y/n)")
-            reroll = input()
-            if reroll.lower() == 'y':
-                print("Rerolling stats...\n")
-                reroll = True
-                c -= 1
-                break
-            elif reroll.lower() == 'n':
-                reroll = False
-                break
-            else:
-                print("Input not valid.")
-                        
     tempHP = characterStats[3]      #Setting temporary hit points
     tempHealthFile = open("tempHealthFile.pkl","bw")
     pickle.dump(tempHP, tempHealthFile)
@@ -262,14 +253,14 @@ def saveCharacter():
     file["magic"] = [characterStats[4], '/', characterStats[4]]
     file["profession"] = profession
     file["inventory"] = characterEquip
-    file["location"] = location
+    file["location"] = 0
     file["equipped"] = characterEquipped
     file["roomItems"] = roomItems
     file["roomMonsters"] = roomMonsters
     file["deadMonsters"] = deadMonsters
     file["lootedMonsters"] = tempLootedMonsters
     file["npcs"] = tempNPCs
-    file["deathCount"] = '0'
+    file["deathCount"] = 0
     file["experience"] = 0
     
     file.close()
@@ -300,8 +291,13 @@ def saveCharacter():
     tempPickleEquipped.close()
     #Load death count
     tempPickleDC = open("tempPickleDC.pkl","bw")           
-    pickle.dump('0',tempPickleDC)
+    pickle.dump(0,tempPickleDC)
     tempPickleDC.close()
+    #Load Experience
+    tempPickleXP = open("tempPickleXP.pkl","bw")           
+    pickle.dump(0,tempPickleXP)
+    tempPickleXP.close()
+    #Characters level up every 2000XP points. Ie, level 1 is 0-1999 xp. Level 2 is 2000-3999...
 
     print("Saved.\n")
     time.sleep(1)
@@ -311,6 +307,12 @@ playState = 'y'
 welcomePlayer()
     
 while playState == 'y':   
+    characterStats = ['strength', 'intelligence', 'dexterity', 'health', 'magic']
+    characterEquip = []
+    characterEquipped = []
+    playState = 'y'
+    name = 'name'
+    newGold = 0
     name = characterName()
     rollDice(characterStats)
     profession = charProfSelect()
@@ -320,7 +322,7 @@ while playState == 'y':
     character()
     giveEquipment()
     inventoryList()
-    location = setInitialLocation()
+    location = 0
     saveCharacter()
     
     playState = playAgain()
