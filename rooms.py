@@ -137,7 +137,7 @@ To the North, East, South, and West are hallways.''',
     1:'''A quiet, dusty hallway. It does not look as if anyone has been here in a long time.
 To the North and South are hallways. To the West is the Dojo.''',
     2:'''A quiet, dusty hallway. It does not look as if anyone has been here in a long time.
-To the North the is the Dojo. To the East is the kitchen. To the West are hallways. You can
+To the North the is the Dojo. To the West is the kitchen. To the East is a hallway. You can
 leave the Dojo to the South.''',
     3:'''A quiet, dusty hallway. It does not look as if anyone has been here in a long time.
 To the North are the sleeping quarters and to the South is the kitchen. To the East is the
@@ -801,7 +801,7 @@ roomItems = (
     #13
     [''],
     #14
-    [''],
+    ['water', 'water', 'water', 'water', 'water'],
     #15
     [''],
     #16
@@ -809,7 +809,7 @@ roomItems = (
     #17
     [''],
     #18
-    ['water', 'water', 'water', 'water', 'water'],
+    [''],
     #19
     [''],
     #20

@@ -1,10 +1,7 @@
 #Room check
-import time
-import random
-import pickle
-import shelve
-import rooms
+import time, random, pickle, shelve, rooms
 from gameItems import itemNames
+from collections import Counter
 
 def checkRoomItems():
     #Get current location
@@ -17,16 +14,7 @@ def checkRoomItems():
     roomItems = tempRoomItems[room]
     
     if len(roomItems) != 0:
-        if roomItems[0] != '':
-            print("There is a ", end="")
-            for c in range(len(roomItems)):
-                if c == 0:
-                    print(roomItems[0], end="")
-                elif c > 0 and roomItems[c] != '':
-                    print(" and a " + roomItems[c], end="")
-            print(" here.")            
-        else:
-            pass
+        combineDups(roomItems, '')
         return True
     else:
         return False
@@ -50,31 +38,13 @@ def checkRoomMonsters():
 
     #Display live monsters
     if len(roomMonsters) != 0:
-        if roomMonsters[0] != '':
-            print("There is a ", end="")
-            for c in range(len(roomMonsters)):
-                if c == 0:
-                    print(roomMonsters[0], end="")
-                elif c > 0:
-                    print(" and a " + roomMonsters[c], end="")
-            print(" here.")
-        else:
-            pass
+        combineDups(roomMonsters, '')
     else:
         pass
 
     #Display dead monsters
     if len(deadMonsters) != 0:
-        if deadMonsters[0] != '':
-            print("There is a dead ", end="")
-            for c in range(len(deadMonsters)):
-                if c == 0:
-                    print(deadMonsters[0], end="")
-                elif c > 0:
-                    print(" and a dead " + deadMonsters[c], end="")
-            print(" rotting here.")
-        else:
-            pass
+        combineDups(deadMonsters, 'dead ')
     else:
         pass
 
@@ -88,15 +58,26 @@ def checkRoomNPCs():
     tempPickleNPCs.close()
     roomNPCs = tempNPCs[room]
     if len(roomNPCs) != 0:
-        if roomNPCs[0] != '':
-            for person in range(len(roomNPCs)):
-                if person == 0:
-                    print(roomNPCs[person].title(), end="")
-                elif person >= 0:
-                    print(" and " + roomNPCs[person], end="")
-            if len(roomNPCs) == 1:
-                print(" is standing here.")
-            else:
-                print(" are standing here.")
+        combineDups(roomNPCs, '')
     else:
         pass
+
+
+def combineDups(roomContents, adjective):
+    if len(roomContents) == 1 and roomContents[0] == '':
+        pass
+    else:
+        roomDupsCnt = Counter(roomContents)
+        if len(roomDupsCnt) > 1:
+            print("There are ", end='')
+        else:
+            print("There is ", end='')
+        for item in roomDupsCnt:
+            if roomDupsCnt[item] > 1: 
+                print(str(roomDupsCnt[item]) + " " + adjective + item + "s, ", end='')
+            elif item == '':
+                pass
+            else:
+                print(str(roomDupsCnt[item]) + " " + adjective + item + ", ", end='')
+        print("here.")
+

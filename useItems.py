@@ -19,18 +19,33 @@ def useItem(item, name):
          #Roll potion effect for stat
          effect = random.randint(1, consumableAction[1])
          newStat = int(updateStat[0]) + effect
-         if consumableAction[0] == 'health' or consumableAction[0] == 'magic':            
-            if newStat > int(updateStat[2]):
-               charFile[consumableAction[0]] = [updateStat[2], '/', updateStat[2]]
-               newStat = updateStat[2]
-               print("Your " + consumableAction[0] + " was maxed out.")
-            elif newStat <= int(updateStat[2]):
-               charFile[consumableAction[0]] = [str(newStat), '/', updateStat[2]]
+
+         #Recover Health Points
+         if consumableAction[0] == 'health':             
+            if newStat >= int(updateStat[2]):
+               updateHealth(name, updateStat[2], updateStat[2])
+               print("Your health was maxed out.")
+               print("Your health is now " + str(updateStat[2]) + ".")
+            elif newStat < int(updateStat[2]):
+               updateHealth(name, newStat, updateStat[2])
+               print("Your health is now " + str(newStat) + ".")
+            else:
+               print("There was an error while updating your " + updateStat + ".")
+
+         #Recover Magic Points
+         elif consumableAction[0] == 'magic':
+            if newStat >= int(updateStat[2]):
+               updateMagic(name, updateStat[2], updateStat[2])
+               print("Your magic was maxed out.")
+               print("Your magic is now " + str(updateStat[2]) + ".")
+               print("Your magic is now " + str(newStat) + ".")
+            elif newStat < int(updateStat[2]):
+               updateMagic(name, newStat, updateStat[2])
+               print("Your magic is now " + str(newStat) + ".")
             else:
                print("There was an error while updating your " + updateStat + ".")
          else:
             charFile[consumableAction[0]] = newStat
-         print("Your " + consumableAction[0] + " is now " + str(newStat) + ".")
       elif itemType == 'book':
          pass
       elif itemType == 'spell':
@@ -46,4 +61,34 @@ def useItem(item, name):
    else:
       print("You cannot use " + item + ".\n")
    pass
+
+
+def updateHealth(name, updateStat1, updateStat2):
+   charFile = shelve.open(name + "SaveFile")
+   newHealth = [updateStat1, '/', updateStat2]
+   charFile["health"][0] = newHealth
+   charFile.close()
+   tempHealth = open("tempHealthFile.pkl","bw")
+   pickle.dump(newHealth,tempHealth)
+   tempHealth.close()
+
+
+def updateMagic(name, updateStat1, updateStat2):
+   charFile = shelve.open(name + "SaveFile")
+   newMagic = [updateStat1, '/', updateStat2]
+   charFile["magic"][0] = newMagic
+   charFile.close()
+   tempMagic = open("tempMagicFile.pkl","bw")
+   pickle.dump(newMagic,tempMagic)
+   tempMagic.close()
+   print("Your magic points were maxed out.")
+
+
+
+
+
+
+
+
+
 

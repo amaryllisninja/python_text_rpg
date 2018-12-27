@@ -17,7 +17,7 @@ def isEquippable(globalItem, action):
             equippedType.append(localType)
             c += 1
             
-        charInvTemp = open("charInvTemp.pkl","rb")  #Get items in char. inventory
+        charInvTemp = open("charInvTemp.pkl","rb")                          #Get items in char. inventory
         characterEquip = pickle.load(charInvTemp)
         charInvTemp.close()
         
@@ -26,16 +26,16 @@ def isEquippable(globalItem, action):
             globalType = gameItems.itemType[globalItem]
             if globalType in equippedType:
                 if globalItem[:1] == ['a', 'e', 'i', 'o', 'u']:
-                    print("You are already " + action + "ing an " + globalType)
+                    print("You are already have an " + globalType + " equipped.")
                 else:
-                    print("You are already " + action + "ing a " + globalType)
+                    print("You are already have a " + globalType + " equipped.")
             elif globalType not in equippedType:
-                characterEquip.remove(globalItem)               #Remove equipped item from inventory pickle
+                characterEquip.remove(globalItem)                           #Remove equipped item from inventory pickle
                 if characterEquip == [] or characterEquip == ():
                     characterEquip.append("")
                 else:
                     pass
-                charInvTemp = open("charInvTemp.pkl","bw")      #Dump inventory list to pickle
+                charInvTemp = open("charInvTemp.pkl","bw")                  #Dump inventory list to pickle
                 pickle.dump(characterEquip, charInvTemp)        
                 charInvTemp.close()
 
@@ -58,12 +58,12 @@ def isEquippable(globalItem, action):
             print("There was a problem with finding that item in your inventory.")
     else:
         print("Nothing is equipped.")
-        charInvTemp = open("charInvTemp.pkl","rb")  #Get items in char. inventory
+        charInvTemp = open("charInvTemp.pkl","rb")                          #Get items in char. inventory
         characterEquip = pickle.load(charInvTemp)
         charInvTemp.close()
         if globalItem in characterEquip:
-            characterEquip.remove(globalItem)               #Remove equipped item from inventory pickle
-            charInvTemp = open("charInvTemp.pkl","bw")      #Dump inventory list to pickle
+            characterEquip.remove(globalItem)                               #Remove equipped item from inventory pickle
+            charInvTemp = open("charInvTemp.pkl","bw")                      #Dump inventory list to pickle
             pickle.dump(characterEquip, charInvTemp)        
             charInvTemp.close()
             

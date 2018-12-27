@@ -14,10 +14,13 @@ def talk(npcName):
 
 def farewell(npcName):
     farewellList = gN.npcFarewell[npcName]
-    randNum = random.randint(0, len(farewellList))
+    randNum = random.randint(0, len(farewellList) - 1)
     print(farewellList[randNum])
 
 def buy(npcName):
+    tempPickleGold = open("tempPickleGold.pkl","rb")
+    charGold = pickle.load(tempPickleGold)
+    tempPickleGold.close()
     if getNPCType(npcName) == 'merchant':
         merchantInventory = gN.merchantInventory[npcName]
         for c in range(len(merchantInventory)):

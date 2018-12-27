@@ -395,3 +395,9 @@ consumableInfo = {
     'moldy cheese':['health',-5],
     'blood orange':['magic', 10]
 }
+
+
+
+
+
+

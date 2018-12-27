@@ -1,6 +1,7 @@
 import pickle, random, time, shelve, dialogue, rooms, checkRoom, roll, rooms, os
 import gameItems as gI
 import gameMonsters as gMon
+import gameNPCs as gNPCs
 
 def lootMon(charName, monster):
     #Load current room
@@ -54,7 +55,9 @@ def lootMon(charName, monster):
 
     elif monster in gI.itemNames:
         print("Why don\'t you try \'getting\' and item?")
-        time.sleep(1)
+    
+    elif monster in gNPCs.npcNames:
+        print("Nice try, bucko, but you can't loot " + monster + ".")
         
     elif monster in tempLootedMonsters[room]: 
         if monster in tempLootedMonsters[room] and deadMonDups != lootedMonDups:
@@ -66,6 +69,7 @@ def lootMon(charName, monster):
 
     else:
         print("There was an error finding a monster to loot.")
+    time.sleep(1)
             
 
 def getLoot(monster, tempLootedMonsters, room):
@@ -91,7 +95,7 @@ def getLoot(monster, tempLootedMonsters, room):
                 pass
             c += 1
         print("On " + monster + ", you found:")
-        print('/n'.join(droppedList))
+        print('\n'.join(droppedList))
         #print(tempLootedMonsters, room, len(tempLootedMonsters))
         #print(tempLootedMonsters)
     else:

@@ -96,7 +96,7 @@ def attack(action, charName):
                 atkAction = input()
 
                 while True:
-                    # If attacking ###########################
+                    #If attacking ###########################
                     if atkAction.lower() == 'attack':
                         time.sleep(1)
                         charToHit = rollToHit(charHitStat[mainStat])
@@ -132,6 +132,12 @@ def attack(action, charName):
                                 charInvTemp = open("charInvTemp.pkl","bw")
                                 pickle.dump(inventory, charInvTemp)
                                 charInvTemp.close()
+                                charFile = shelve.open(charName + "SaveFile")       #Load character
+                                fileHealth = charFile["health"]                     #Load character HP
+                                health[0] = int(fileHealth[0])                      #Set health after item use
+                                fileMagic = charFile["magic"]                       #Load character MP
+                                magic[0] = int(fileMagic[0])                        #Set health after item use
+                                charFile.close()
                                 break
                             else:
                                 print("You cannot use " + itemChoose + " right now.\n")
@@ -223,7 +229,7 @@ def thacoCalc(totalAC, dex):
     thaco = 10 + int(totalAC) + statMod[int(dex)]
     return thaco
 
-def rollToHit(stat): # Profession dominant stat
+def rollToHit(stat):                                            #Profession dominant stat
     toHit = (random.randint(1, 20) - statMod[int(stat)])
     return toHit
 
@@ -244,7 +250,7 @@ def checkEquipped(charName, victim):
     equippedPickle.close()
     aC = 0
     atkDice = [1, 3]
-    for c in range(0,len(equipped)):   #Find which items equipped are weapons
+    for c in range(0,len(equipped)):                            #Find which items equipped are weapons
         itemType = gI.itemType[equipped[c]]        
         if itemType == 'weapon':
             atkDice = gI.weaponHitDice[equipped[c]]
@@ -263,7 +269,7 @@ def checkEquipped(charName, victim):
     aDaC.append(atkDice[0])
     aDaC.append(atkDice[1])
     aDaC.append(aC)
-    return aDaC     #aDaC = [number of dice, sides on dice, armor class]
+    return aDaC                                                 #aDaC = [number of dice, sides on dice, armor class]
 
 def monsterWeaponCheck(monster):
     monItems = gMon.monsterItems[monster]
