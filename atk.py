@@ -2,6 +2,7 @@ import pickle, random, time, shelve, dialogue, rooms, checkRoom, roll
 import gameItems as gI
 import gameMonsters as gMon
 import useItems as uI
+import leveling as lvl
 global inCombat
 
 statMod = {1:-5, 2:-3, 3:-3, 4:-2, 5:-2, 6:-1, 7:-1, 8:0,
@@ -108,6 +109,7 @@ def attack(action, charName):
                         if monsterHP <= 0:
                             print("You have killed " + victim.title() + ".")
                             removeMonster(charName, victim, room)
+                            lvl.addXP(charName, victim)
                             inCombat == False
                             break
                         elif monsterHP > 0:

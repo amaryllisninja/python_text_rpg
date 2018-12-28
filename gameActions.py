@@ -4,6 +4,7 @@ import checkRoom, dialogue, cmdList, equipFuncs, gameMonsters, gameNPCs, atk
 import npcFunctions as npcFunc
 import useItems as uI
 import gameItems as gI
+import leveling as lvl
 
 def save(name):
     print("Saving...")
@@ -242,6 +243,8 @@ def checkAction(name):
                 fileHealth = charSaveFile["health"]
                 fileMagic = charSaveFile["magic"]
                 fileProfession = charSaveFile["profession"]
+                fileExperience = charSaveFile["experience"]
+                level = lvl.checkLevel(fileExperience)
 
                 tempPickleEquipped = open("tempPickleEquipped.pkl","rb")    #Load equipped list 
                 tempEquipped = pickle.load(tempPickleEquipped)
@@ -263,6 +266,8 @@ def checkAction(name):
                 print("Your health points are ", ''.join(fileHealth))
                 print("Your magic points are ", ''.join(fileMagic))
                 print("You are a " + fileProfession)
+                print("You are level ", level)
+                print("You have " + str(fileExperience) + " experience points.")
                 print("You are are equipped with:\n" + '\n'.join(tempEquipped) + "\n")
             else:
                 print("That isn't here. Try typing the full name of what you're looking at.")

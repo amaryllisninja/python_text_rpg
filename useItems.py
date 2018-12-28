@@ -65,8 +65,8 @@ def useItem(item, name):
 
 def updateHealth(name, updateStat1, updateStat2):
    charFile = shelve.open(name + "SaveFile")
-   newHealth = [updateStat1, '/', updateStat2]
-   charFile["health"][0] = newHealth
+   newHealth = [str(updateStat1), '/', str(updateStat2)]
+   charFile["health"] = newHealth
    charFile.close()
    tempHealth = open("tempHealthFile.pkl","bw")
    pickle.dump(newHealth,tempHealth)
@@ -75,8 +75,8 @@ def updateHealth(name, updateStat1, updateStat2):
 
 def updateMagic(name, updateStat1, updateStat2):
    charFile = shelve.open(name + "SaveFile")
-   newMagic = [updateStat1, '/', updateStat2]
-   charFile["magic"][0] = newMagic
+   newMagic = [str(updateStat1), '/', str(updateStat2)]
+   charFile["magic"] = newMagic
    charFile.close()
    tempMagic = open("tempMagicFile.pkl","bw")
    pickle.dump(newMagic,tempMagic)
