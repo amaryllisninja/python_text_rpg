@@ -73,11 +73,11 @@ def rollDice(chatacterStats):
             time.sleep(1)
         
     tempHP = characterStats[3]      #Setting temporary hit points
-    tempHealthFile = open(currentLoc + "\\temp\\tempHealthFile.pkl","bw")
+    tempHealthFile = open(".\\temp\\tempHealthFile.pkl","bw")
     pickle.dump(tempHP, tempHealthFile)
     tempHealthFile.close()
     tempMP = characterStats[4]      #Setting temporary magic points
-    tempMagicFile = open(currentLoc + "\\temp\\tempMagicFile.pkl","bw")
+    tempMagicFile = open(".\\temp\\tempMagicFile.pkl","bw")
     pickle.dump(tempMP, tempMagicFile)
     tempMagicFile.close()
     time.sleep(2)
@@ -178,7 +178,7 @@ def giveEquipment():
     file["gold"] = newGold
     file.close()
     #Create gold pickle
-    tempPickleGold = open(currentLoc + "\\temp\\tempPickleGold.pkl","bw")
+    tempPickleGold = open(".\\temp\\tempPickleGold.pkl","bw")
     pickle.dump(newGold, tempPickleGold)
     tempPickleGold.close()
 
@@ -206,25 +206,25 @@ def saveCharacter():
     print("Saving your character...")
 
     #Create room items
-    tempPickleItems = open(currentLoc + "\\temp\\tempPickleItems.pkl","bw")       
+    tempPickleItems = open(".\\temp\\tempPickleItems.pkl","bw")       
     pickle.dump(rooms.roomItems,tempPickleItems)
     tempPickleItems.close()
-    tempPickleItems = open(currentLoc + "\\temp\\tempPickleItems.pkl","rb")
+    tempPickleItems = open(".\\temp\\tempPickleItems.pkl","rb")
     roomItems = pickle.load(tempPickleItems)
     tempPickleItems.close()
     #Create live room monsters
-    tempPickleMonsters = open(currentLoc + "\\temp\\tempPickleMonsters.pkl","bw")       
+    tempPickleMonsters = open(".\\temp\\tempPickleMonsters.pkl","bw")       
     pickle.dump(rooms.roomMonsters,tempPickleMonsters)
     tempPickleMonsters.close()
-    tempPickleMonsters = open(currentLoc + "\\temp\\tempPickleMonsters.pkl","rb")    
+    tempPickleMonsters = open(".\\temp\\tempPickleMonsters.pkl","rb")    
     roomMonsters = pickle.load(tempPickleMonsters)
     tempPickleMonsters.close()
     
     #Create dead room monsters
-    tempPickleDeadMon = open(currentLoc + "\\temp\\tempPickleDeadMon.pkl","bw")
+    tempPickleDeadMon = open(".\\temp\\tempPickleDeadMon.pkl","bw")
     pickle.dump(rooms.deadMonsters,tempPickleDeadMon)
     tempPickleDeadMon.close()
-    tempPickleDeadMon = open(currentLoc + "\\temp\\tempPickleDeadMon.pkl","rb")
+    tempPickleDeadMon = open(".\\temp\\tempPickleDeadMon.pkl","rb")
     deadMonsters = pickle.load(tempPickleDeadMon)
     tempPickleDeadMon.close()
     
@@ -234,15 +234,15 @@ def saveCharacter():
         tempLootedMonsters.append('')
         tempLootedMonsters[c] = list(tempLootedMonsters[c])
         c += 1
-    tempPickleLootedMon = open(currentLoc + "\\temp\\tempPickleLootedMon.pkl","bw")
+    tempPickleLootedMon = open(".\\temp\\tempPickleLootedMon.pkl","bw")
     pickle.dump(tempLootedMonsters,tempPickleLootedMon) 
     tempPickleLootedMon.close()
 
     #Create NPCs
-    tempPickleNPCs = open(currentLoc + "\\temp\\tempPickleNPCs.pkl","bw")
+    tempPickleNPCs = open(".\\temp\\tempPickleNPCs.pkl","bw")
     pickle.dump(rooms.roomNPCs, tempPickleNPCs)
     tempPickleNPCs.close()
-    tempPickleNPCs = open(currentLoc + "\\temp\\tempPickleNPCs.pkl","rb")
+    tempPickleNPCs = open(".\\temp\\tempPickleNPCs.pkl","rb")
     tempNPCs = pickle.load(tempPickleNPCs)
     tempPickleNPCs.close()
     
@@ -269,35 +269,35 @@ def saveCharacter():
     file.close()
 
     #Load name
-    fileName = open(currentLoc + "\\temp\\tempCharName.pkl","bw")                
+    fileName = open(".\\temp\\tempCharName.pkl","bw")                
     pickle.dump(name,fileName)
     file.close()
     #Load stats
-    fileStats = open(currentLoc + "\\temp\\charStatsTemp.pkl","bw")              
+    fileStats = open(".\\temp\\charStatsTemp.pkl","bw")              
     pickle.dump(characterStats,fileStats)
     fileStats.close()
     #Load inventory
-    fileInv = open(currentLoc + "\\temp\\charInvTemp.pkl","bw")                  
+    fileInv = open(".\\temp\\charInvTemp.pkl","bw")                  
     pickle.dump(characterEquip,fileInv)
     fileInv.close()
     #Load HP
-    fileHP = open(currentLoc + "\\temp\\charHealthTemp.pkl","bw")                
+    fileHP = open(".\\temp\\charHealthTemp.pkl","bw")                
     pickle.dump(characterStats[3],fileHP)
     fileHP.close()
     #Load MP
-    fileMP = open(currentLoc + "\\temp\\charMagicTemp.pkl","bw")                 
+    fileMP = open(".\\temp\\charMagicTemp.pkl","bw")                 
     pickle.dump(characterStats[4],fileMP)
     fileMP.close()
     #Load equipped 
-    tempPickleEquipped = open(currentLoc + "\\temp\\tempPickleEquipped.pkl","bw") 
+    tempPickleEquipped = open(".\\temp\\tempPickleEquipped.pkl","bw") 
     pickle.dump(characterEquipped,tempPickleEquipped)
     tempPickleEquipped.close()
     #Load death count
-    tempPickleDC = open(currentLoc + "\\temp\\tempPickleDC.pkl","bw")           
+    tempPickleDC = open(".\\temp\\tempPickleDC.pkl","bw")           
     pickle.dump(0,tempPickleDC)
     tempPickleDC.close()
     #Load Experience
-    tempPickleXP = open(currentLoc + "\\temp\\tempPickleXP.pkl","bw")           
+    tempPickleXP = open(".\\temp\\tempPickleXP.pkl","bw")           
     pickle.dump(0,tempPickleXP)
     tempPickleXP.close()
     #Characters level up every 2000XP points. Ie, level 1 is 0-1999 xp. Level 2 is 2000-3999...

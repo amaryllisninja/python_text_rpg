@@ -1,8 +1,9 @@
 # Character file loading module
 import shelve, time, rooms, pickle, os, string
+currentLoc = os.getcwd()
 
 def checkSaved(loadCharName):
-    fileList = os.listdir(os.getcwd())
+    fileList = os.listdir(currentLoc + "\\charsaves\\")
     charSaved = []
     savedNames = []
     for file in range(len(fileList)):
@@ -30,7 +31,7 @@ def loadCharModule():
         loadCharName = input().lower()
         loadCharName = loadCharName.replace(" ","")
 
-        fileList = os.listdir(os.getcwd())
+        fileList = os.listdir(currentLoc + "\\charsaves\\")
         charSaved = []
         savedNames = []
         for file in range(len(fileList)):
@@ -54,7 +55,7 @@ def loadCharModule():
             print("Loading character...")
             time.sleep(1)
 
-            characterLoaded = shelve.open(loadCharName + "SaveFile")
+            characterLoaded = shelve.open(currentLoc + "\\charsaves\\" + loadCharName + "SaveFile")
 
             name = characterLoaded["name"]
             strength = characterLoaded["strength"]
@@ -70,10 +71,10 @@ def loadCharModule():
             magic = characterLoaded["magic"]
             characterEquipped = characterLoaded["equipped"]
 
-            fileStats = open("charStatsTemp.pkl","bw")
+            fileStats = open(".\\temp\\charStatsTemp.pkl","bw")
             pickle.dump(stats,fileStats)
             fileStats.close()
-            fileInv = open("charInvTemp.pkl","bw")
+            fileInv = open(".\\temp\\charInvTemp.pkl","bw")
             pickle.dump(inventory,fileInv)
             fileInv.close()
 
@@ -92,7 +93,7 @@ def loadCharModule():
             print('\n'.join(characterEquipped))
             print("Current location: " + rooms.roomNames[location])
 
-            file = open("tempCharName.pkl","bw")
+            file = open(".\\temp\\tempCharName.pkl","bw")
             pickle.dump(loadCharName,file)
             file.close()
 
