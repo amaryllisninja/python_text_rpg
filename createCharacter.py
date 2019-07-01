@@ -1,6 +1,7 @@
 # Character creation module
 
-import random, time, pickle, shelve, characters, rooms, roll
+import random, time, pickle, shelve, characters, rooms, roll, os
+currentLoc = os.getcwd()
 
 def welcomePlayer():
     print("Welcome to Amaryllis' character generator!")
@@ -72,11 +73,11 @@ def rollDice(chatacterStats):
             time.sleep(1)
         
     tempHP = characterStats[3]      #Setting temporary hit points
-    tempHealthFile = open("tempHealthFile.pkl","bw")
+    tempHealthFile = open(currentLoc + "\\temp\\tempHealthFile.pkl","bw")
     pickle.dump(tempHP, tempHealthFile)
     tempHealthFile.close()
     tempMP = characterStats[4]      #Setting temporary magic points
-    tempMagicFile = open("tempMagicFile.pkl","bw")
+    tempMagicFile = open(currentLoc + "\\temp\\tempMagicFile.pkl","bw")
     pickle.dump(tempMP, tempMagicFile)
     tempMagicFile.close()
     time.sleep(2)
@@ -172,11 +173,12 @@ def giveEquipment():
         characterEquip.append('lock picking kit')
         characterEquip.append('rope')
         newGold = (roll.rollDice(2, 6))*10
-    file = shelve.open(name.lower().replace(" ", "") + "SaveFile")
+    saveFileName = name.lower().replace(" ", "") + "SaveFile"
+    file = shelve.open(currentLoc + "\\charsaves\\" + saveFileName)
     file["gold"] = newGold
     file.close()
     #Create gold pickle
-    tempPickleGold = open("tempPickleGold.pkl","bw")
+    tempPickleGold = open(currentLoc + "\\temp\\tempPickleGold.pkl","bw")
     pickle.dump(newGold, tempPickleGold)
     tempPickleGold.close()
 
@@ -204,25 +206,25 @@ def saveCharacter():
     print("Saving your character...")
 
     #Create room items
-    tempPickleItems = open("tempPickleItems.pkl","bw")       
+    tempPickleItems = open(currentLoc + "\\temp\\tempPickleItems.pkl","bw")       
     pickle.dump(rooms.roomItems,tempPickleItems)
     tempPickleItems.close()
-    tempPickleItems = open("tempPickleItems.pkl","rb")
+    tempPickleItems = open(currentLoc + "\\temp\\tempPickleItems.pkl","rb")
     roomItems = pickle.load(tempPickleItems)
     tempPickleItems.close()
     #Create live room monsters
-    tempPickleMonsters = open("tempPickleMonsters.pkl","bw")       
+    tempPickleMonsters = open(currentLoc + "\\temp\\tempPickleMonsters.pkl","bw")       
     pickle.dump(rooms.roomMonsters,tempPickleMonsters)
     tempPickleMonsters.close()
-    tempPickleMonsters = open("tempPickleMonsters.pkl","rb")    
+    tempPickleMonsters = open(currentLoc + "\\temp\\tempPickleMonsters.pkl","rb")    
     roomMonsters = pickle.load(tempPickleMonsters)
     tempPickleMonsters.close()
     
     #Create dead room monsters
-    tempPickleDeadMon = open("tempPickleDeadMon.pkl","bw")
+    tempPickleDeadMon = open(currentLoc + "\\temp\\tempPickleDeadMon.pkl","bw")
     pickle.dump(rooms.deadMonsters,tempPickleDeadMon)
     tempPickleDeadMon.close()
-    tempPickleDeadMon = open("tempPickleDeadMon.pkl","rb")
+    tempPickleDeadMon = open(currentLoc + "\\temp\\tempPickleDeadMon.pkl","rb")
     deadMonsters = pickle.load(tempPickleDeadMon)
     tempPickleDeadMon.close()
     
@@ -232,19 +234,20 @@ def saveCharacter():
         tempLootedMonsters.append('')
         tempLootedMonsters[c] = list(tempLootedMonsters[c])
         c += 1
-    tempPickleLootedMon = open("tempPickleLootedMon.pkl","bw")
+    tempPickleLootedMon = open(currentLoc + "\\temp\\tempPickleLootedMon.pkl","bw")
     pickle.dump(tempLootedMonsters,tempPickleLootedMon) 
     tempPickleLootedMon.close()
 
     #Create NPCs
-    tempPickleNPCs = open("tempPickleNPCs.pkl","bw")
+    tempPickleNPCs = open(currentLoc + "\\temp\\tempPickleNPCs.pkl","bw")
     pickle.dump(rooms.roomNPCs, tempPickleNPCs)
     tempPickleNPCs.close()
-    tempPickleNPCs = open("tempPickleNPCs.pkl","rb")
+    tempPickleNPCs = open(currentLoc + "\\temp\\tempPickleNPCs.pkl","rb")
     tempNPCs = pickle.load(tempPickleNPCs)
     tempPickleNPCs.close()
     
-    file = shelve.open(name.lower().replace(" ", "") + "SaveFile")
+    saveFileName = name.lower().replace(" ", "") + "SaveFile"
+    file = shelve.open(currentLoc + "\\charsaves\\" + saveFileName)
     file["name"] = name
     file["strength"] = characterStats[0]
     file["intelligence"] = characterStats[1]
@@ -266,35 +269,35 @@ def saveCharacter():
     file.close()
 
     #Load name
-    fileName = open("tempCharName.pkl","bw")                
+    fileName = open(currentLoc + "\\temp\\tempCharName.pkl","bw")                
     pickle.dump(name,fileName)
     file.close()
     #Load stats
-    fileStats = open("charStatsTemp.pkl","bw")              
+    fileStats = open(currentLoc + "\\temp\\charStatsTemp.pkl","bw")              
     pickle.dump(characterStats,fileStats)
     fileStats.close()
     #Load inventory
-    fileInv = open("charInvTemp.pkl","bw")                  
+    fileInv = open(currentLoc + "\\temp\\charInvTemp.pkl","bw")                  
     pickle.dump(characterEquip,fileInv)
     fileInv.close()
     #Load HP
-    fileHP = open("charHealthTemp.pkl","bw")                
+    fileHP = open(currentLoc + "\\temp\\charHealthTemp.pkl","bw")                
     pickle.dump(characterStats[3],fileHP)
     fileHP.close()
     #Load MP
-    fileMP = open("charMagicTemp.pkl","bw")                 
+    fileMP = open(currentLoc + "\\temp\\charMagicTemp.pkl","bw")                 
     pickle.dump(characterStats[4],fileMP)
     fileMP.close()
     #Load equipped 
-    tempPickleEquipped = open("tempPickleEquipped.pkl","bw") 
+    tempPickleEquipped = open(currentLoc + "\\temp\\tempPickleEquipped.pkl","bw") 
     pickle.dump(characterEquipped,tempPickleEquipped)
     tempPickleEquipped.close()
     #Load death count
-    tempPickleDC = open("tempPickleDC.pkl","bw")           
+    tempPickleDC = open(currentLoc + "\\temp\\tempPickleDC.pkl","bw")           
     pickle.dump(0,tempPickleDC)
     tempPickleDC.close()
     #Load Experience
-    tempPickleXP = open("tempPickleXP.pkl","bw")           
+    tempPickleXP = open(currentLoc + "\\temp\\tempPickleXP.pkl","bw")           
     pickle.dump(0,tempPickleXP)
     tempPickleXP.close()
     #Characters level up every 2000XP points. Ie, level 1 is 0-1999 xp. Level 2 is 2000-3999...
@@ -302,10 +305,22 @@ def saveCharacter():
     print("Saved.\n")
     time.sleep(1)
 
+def createFolders(currentLoc):
+    if os.path.exists(currentLoc + '\\charsaves') == True:
+        pass
+    else:
+        os.makedirs(currentLoc + '\\charsaves')
+    if os.path.exists(currentLoc + '\\temp') == True:
+        pass
+    else:
+        os.makedirs(currentLoc + '\\temp')
+
 # Start of actual character generation code
 playState = 'y'
 welcomePlayer()
     
+createFolders(currentLoc)
+
 while playState == 'y':   
     characterStats = ['strength', 'intelligence', 'dexterity', 'health', 'magic']
     characterEquip = []
