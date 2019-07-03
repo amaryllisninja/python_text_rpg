@@ -5,7 +5,8 @@ def useItem(item, name):
    print(gI.itemType[item])
    if gI.itemType[item] in gI.useTypes:
       itemType = gI.itemType[item]
-      charFile = shelve.open(name + "SaveFile")
+      saveFileName = ".\\charsaves\\" + name.lower().replace(" ", "") + "SaveFile"
+      charFile = shelve.open(saveFileName)                #Load character
       
       if itemType == 'item':
          pass
@@ -64,21 +65,23 @@ def useItem(item, name):
 
 
 def updateHealth(name, updateStat1, updateStat2):
-   charFile = shelve.open(name + "SaveFile")
+   saveFileName = ".\\charsaves\\" + name.lower().replace(" ", "") + "SaveFile"
+   charFile = shelve.open(saveFileName)                #Load character
    newHealth = [str(updateStat1), '/', str(updateStat2)]
    charFile["health"] = newHealth
    charFile.close()
-   tempHealth = open("tempHealthFile.pkl","bw")
+   tempHealth = open(".\\temp\\tempHealthFile.pkl","bw")
    pickle.dump(newHealth,tempHealth)
    tempHealth.close()
 
 
 def updateMagic(name, updateStat1, updateStat2):
-   charFile = shelve.open(name + "SaveFile")
+   saveFileName = ".\\charsaves\\" + name.lower().replace(" ", "") + "SaveFile"
+   charFile = shelve.open(saveFileName)                #Load character
    newMagic = [str(updateStat1), '/', str(updateStat2)]
    charFile["magic"] = newMagic
    charFile.close()
-   tempMagic = open("tempMagicFile.pkl","bw")
+   tempMagic = open(".\\temp\\tempMagicFile.pkl","bw")
    pickle.dump(newMagic,tempMagic)
    tempMagic.close()
    print("Your magic points were maxed out.")

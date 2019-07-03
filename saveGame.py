@@ -5,8 +5,9 @@ import time
 def save(name):
     print("Saving your game...")
 
-    file = shelve.open(name + "SaveFile")
-    tempPickleLoc = open("tempPickleLoc.pkl","bw")
+    saveFileName = ".\\charsaves\\" + name.lower().replace(" ", "") + "SaveFile"
+    file = shelve.open(saveFileName)                #Load character
+    tempPickleLoc = open(".\\temp\\tempPickleLoc.pkl","bw")
     '''characterStats[0] = file["strength"]
     characterStats[1] = file["intelligence"]
     characterStats[2] = file["dexterity"]
@@ -19,4 +20,4 @@ def save(name):
     time.sleep(1)
 
 def pickleLocation():
-    tempLocFile = open("tempLoc.pkl","bw")
+    tempLocFile = open(".\\temp\\tempLoc.pkl","bw")

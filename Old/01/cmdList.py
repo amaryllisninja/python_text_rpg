@@ -1,7 +1,0 @@
-moveCmdList = ['go', 'move', 'run', 'walk', 'leave']
-getCmdList = ['get', 'grab', 'take']
-dropCmdList = ['drop', 'throw', 'leave']
-equipCmdList = ['equip', 'hold', 'wield', 'wear', 'use']
-wearCmdList = ['wear']
-unequipCmdList = ['unequip', 'remove']
-attackCmdList = ['fight', 'attack', 'hit', 'kill', 'kick', 'punch', 'smash', 'pummel', 'pound', 'smear', 'destroy', 'mutilate']

@@ -5,12 +5,12 @@ import gameNPCs as gNPCs
 
 def lootMon(charName, monster):
     #Load current room
-    tempPickleLoc = open("tempPickleLoc.pkl","rb")      
+    tempPickleLoc = open(".\\temp\\tempPickleLoc.pkl","rb")      
     room = pickle.load(tempPickleLoc)
     tempPickleLoc.close()
     
     #Get current dead monsters in room for character
-    tempPickleDeadMon = open("tempPickleDeadMon.pkl","rb")
+    tempPickleDeadMon = open(".\\temp\\tempPickleDeadMon.pkl","rb")
     tempDeadMonsters = pickle.load(tempPickleDeadMon)
     tempPickleDeadMon.close()
 
@@ -18,9 +18,9 @@ def lootMon(charName, monster):
     deadMonDups = 0
     lootedMonDups = 0
 
-    if os.path.isfile('tempPickleLootedMon.pkl') == True:
+    if os.path.isfile('.\\temp\\tempPickleLootedMon.pkl') == True:
         #Get current looted monsters in room for character
-        tempPickleLootedMon = open("tempPickleLootedMon.pkl","rb")
+        tempPickleLootedMon = open(".\\temp\\tempPickleLootedMon.pkl","rb")
         tempLootedMonsters = pickle.load(tempPickleLootedMon) 
         tempPickleLootedMon.close()
         #print("Pickle exists!", tempLootedMonsters)
@@ -31,7 +31,7 @@ def lootMon(charName, monster):
             tempLootedMonsters.append('')
             tempLootedMonsters[c] = list(tempLootedMonsters[c])
             c += 1
-        tempPickleLootedMon = open("tempPickleLootedMon.pkl", 'bw')
+        tempPickleLootedMon = open(".\\temp\\tempPickleLootedMon.pkl", 'bw')
         pickle.dump(tempLootedMonsters,tempPickleLootedMon)
         tempPickleLootedMon.close()
         #print("Pickle didn't exist.", tempLootedMonsters)
@@ -101,18 +101,18 @@ def getLoot(monster, tempLootedMonsters, room):
     else:
         print("You found nothing on the " + monster + ".")
     tempLootedMonsters[room].append(monster)
-    tempPickleLootedMon = open("tempPickleLootedMon.pkl", 'bw') #Add monster to 'looted' list
+    tempPickleLootedMon = open(".\\temp\\tempPickleLootedMon.pkl", 'bw') #Add monster to 'looted' list
     pickle.dump(tempLootedMonsters,tempPickleLootedMon)
     tempPickleLootedMon.close()
 
-    charInvTemp = open("charInvTemp.pkl","rb")
+    charInvTemp = open(".\\temp\\charInvTemp.pkl","rb")
     inventory = pickle.load(charInvTemp)
     charInvTemp.close()
 
     for item in droppedList:
         inventory.append(item)
     #print(inventory)
-    charInvTemp = open("charInvTemp.pkl","bw")
+    charInvTemp = open(".\\temp\\charInvTemp.pkl","bw")
     pickle.dump(inventory,charInvTemp)
     charInvTemp.close()
 

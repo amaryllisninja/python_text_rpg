@@ -12,7 +12,8 @@ statMod = {1:-5, 2:-3, 3:-3, 4:-2, 5:-2, 6:-1, 7:-1, 8:0,
 
 def attack(action, charName):
     #Load character save file
-    charFile = shelve.open(charName + "SaveFile")       
+    saveFileName = ".\\charsaves\\" + charName.lower().replace(" ", "") + "SaveFile"
+    charFile = shelve.open(saveFileName)    #Load character      
     name = charFile["name"]                 #Load character name
     health = charFile["health"]             #Load character HP
     health[0] = int(health[0])
@@ -25,18 +26,18 @@ def attack(action, charName):
     charFile.close()                        #Close save flie 
     
     #Load current room
-    tempPickleLoc = open("tempPickleLoc.pkl","rb")      
+    tempPickleLoc = open(".\\temp\\tempPickleLoc.pkl","rb")      
     room = pickle.load(tempPickleLoc)
     tempPickleLoc.close()
     
     #Get current live monsters in rooms for character
-    tempPickleMonsters = open("tempPickleMonsters.pkl","rb")
+    tempPickleMonsters = open(".\\temp\\tempPickleMonsters.pkl","rb")
     tempRoomMonsters = pickle.load(tempPickleMonsters)
     tempPickleMonsters.close()
     roomMonsters = tempRoomMonsters[room]
 
     #Get current dead monsters in room for character
-    tempPickleDeadMon = open("tempPickleDeadMon.pkl","rb")
+    tempPickleDeadMon = open(".\\temp\\tempPickleDeadMon.pkl","rb")
     deadMonsters = pickle.load(tempPickleDeadMon)
     tempPickleDeadMon.close()
     deadMonsters = deadMonsters[room]
@@ -121,7 +122,7 @@ def attack(action, charName):
                     
                     #If using item ###########################
                     elif atkAction.lower() == 'item':
-                        charInvTemp = open("charInvTemp.pkl","rb")  #Get items in char. inventory
+                        charInvTemp = open(".\\temp\\charInvTemp.pkl","rb")  #Get items in char. inventory
                         inventory = pickle.load(charInvTemp)
                         charInvTemp.close()
                         print('\n'.join(inventory))                 #Print char inventory
@@ -131,10 +132,11 @@ def attack(action, charName):
                             if gI.itemType[itemChoose] in gI.useTypes:
                                 uI.useItem(itemChoose, charName)
                                 inventory.remove(itemChoose)
-                                charInvTemp = open("charInvTemp.pkl","bw")
+                                charInvTemp = open(".\\temp\\charInvTemp.pkl","bw")
                                 pickle.dump(inventory, charInvTemp)
                                 charInvTemp.close()
-                                charFile = shelve.open(charName + "SaveFile")       #Load character
+                                saveFileName = ".\\charsaves\\" + charName.lower().replace(" ", "") + "SaveFile"
+                                charFile = shelve.open(saveFileName)                #Load character
                                 fileHealth = charFile["health"]                     #Load character HP
                                 health[0] = int(fileHealth[0])                      #Set health after item use
                                 fileMagic = charFile["magic"]                       #Load character MP
@@ -155,7 +157,7 @@ def attack(action, charName):
                     #If fleeing ##############################
                     elif atkAction.lower() == 'flee':
                         print("You flee.")
-                        fileLoc = open("tempPickleLoc.pkl","rb")
+                        fileLoc = open(".\\temp\\tempPickleLoc.pkl","rb")
                         location = pickle.load(fileLoc)
                         fileLoc.close()
                         
@@ -166,7 +168,7 @@ def attack(action, charName):
                             
                             if fleeOpts[roomFlee] != 'x':
                                 location = int(fleeOpts[roomFlee])
-                                fileLoc = open("tempPickleLoc.pkl","bw")
+                                fileLoc = open(".\\temp\\tempPickleLoc.pkl","bw")
                                 pickle.dump(location,fileLoc)
                                 fileLoc.close()
                                 break
@@ -213,7 +215,8 @@ def attack(action, charName):
             else:
                 pass
 
-            charFile = shelve.open(charName + "SaveFile")       #Load character
+            saveFileName = ".\\charsaves\\" + charName.lower().replace(" ", "") + "SaveFile"
+            charFile = shelve.open(saveFileName)                #Load character
             fileHealth = charFile["health"]                     #Load character HP
             fileHealth[0] = str(health[0])
             charFile["health"] = fileHealth
@@ -247,7 +250,7 @@ def atkRoll(numDice, atkDice, thaco, toHit, attacker):
     return damage
 
 def checkEquipped(charName, victim):
-    equippedPickle = open("tempPickleEquipped.pkl", "rb")
+    equippedPickle = open(".\\temp\\tempPickleEquipped.pkl", "rb")
     equipped = pickle.load(equippedPickle)
     equippedPickle.close()
     aC = 0
@@ -301,7 +304,8 @@ def checkHP(person, health, magic):
     if health[0] == 0 or health[0] <= 0:
         print("\n\nYou are dead. You feel nothing.\n\n")
         health[0] = health[2]                                   #Reset Health to full
-        charFile = shelve.open(person + "SaveFile")
+        saveFileName = ".\\charsaves\\" + person.lower().replace(" ", "") + "SaveFile"
+        charFile = shelve.open(saveFileName)                #Load character
         oldDeathCnt = int(charFile["deathCount"])               #Update death count
         newDeathCnt = oldDeathCnt + 1
         charFile["deathCount"] = newDeathCnt
@@ -344,7 +348,7 @@ def getCharStat(statFullName):
         'intelligence': 1,
         'dexterity': 2}
     
-    charStatsTemp = open("charStatsTemp.pkl","rb")
+    charStatsTemp = open(".\\temp\\charStatsTemp.pkl","rb")
     fileStats = pickle.load(charStatsTemp)
     charStatsTemp.close()
     
@@ -408,7 +412,7 @@ def charIsDead(person, deathCnt, health, magic):
 
     #Set location to Dojo (later, underworld)
     location = 0
-    fileLoc = open("tempPickleLoc.pkl","bw")            #Save character location to pickle
+    fileLoc = open(".\\temp\\tempPickleLoc.pkl","bw")            #Save character location to pickle
     pickle.dump(location,fileLoc)
     fileLoc.close()
     print(deathCnt)
@@ -425,13 +429,13 @@ def charIsDead(person, deathCnt, health, magic):
 
 def removeMonster(charName, monster, room):
     #Get current live monsters in rooms for character
-    tempPickleMonsters = open("tempPickleMonsters.pkl","rb")
+    tempPickleMonsters = open(".\\temp\\tempPickleMonsters.pkl","rb")
     tempRoomMonsters = pickle.load(tempPickleMonsters)
     tempPickleMonsters.close()
     roomMonsters = tempRoomMonsters[room]
 
     #Get current dead monsters in room for character
-    tempPickleDeadMon = open("tempPickleDeadMon.pkl","rb")
+    tempPickleDeadMon = open(".\\temp\\tempPickleDeadMon.pkl","rb")
     tempDeadMonsters = pickle.load(tempPickleDeadMon)
     tempPickleDeadMon.close()
     deadMonsters = tempDeadMonsters[room]
@@ -457,11 +461,11 @@ def removeMonster(charName, monster, room):
     tempDeadMonsters[room] = deadMonsters
    
 
-    tempPickleMonsters = open("tempPickleMonsters.pkl","bw")
+    tempPickleMonsters = open(".\\temp\\tempPickleMonsters.pkl","bw")
     pickle.dump(tempRoomMonsters,tempPickleMonsters) 
     tempPickleMonsters.close()
 
-    tempPickleDeadMon = open("tempPickleDeadMon.pkl","bw")
+    tempPickleDeadMon = open(".\\temp\\tempPickleDeadMon.pkl","bw")
     pickle.dump(tempDeadMonsters,tempPickleDeadMon) 
     tempPickleDeadMon.close()
     #print(tempDeadMonsters)

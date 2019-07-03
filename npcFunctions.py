@@ -18,7 +18,7 @@ def farewell(npcName):
     print(farewellList[randNum])
 
 def buy(npcName):
-    tempPickleGold = open("tempPickleGold.pkl","rb")
+    tempPickleGold = open(".\\temp\\tempPickleGold.pkl","rb")
     charGold = pickle.load(tempPickleGold)
     tempPickleGold.close()
     if getNPCType(npcName) == 'merchant':
@@ -30,7 +30,7 @@ def buy(npcName):
         buy = input()
         if buy in merchantInventory and charGold != '':
             price = gI.itemPrices[buy]
-            tempPickleGold = open("tempPickleGold.pkl","rb")
+            tempPickleGold = open(".\\temp\\tempPickleGold.pkl","rb")
             charGold = pickle.load(tempPickleGold)
             tempPickleGold.close()
             if price <= int(charGold):
@@ -42,14 +42,14 @@ def buy(npcName):
                     else:
                         pass
                 charGold = charGold - price
-                tempPickleGold = open("tempPickleGold.pkl","bw")
+                tempPickleGold = open(".\\temp\\tempPickleGold.pkl","bw")
                 pickle.dump(charGold, tempPickleGold)
                 tempPickleGold.close()
-                charInvTemp = open("charInvTemp.pkl","rb")  #Get items in char. inventory
+                charInvTemp = open(".\\temp\\charInvTemp.pkl","rb")  #Get items in char. inventory
                 characterEquip = pickle.load(charInvTemp)
                 charInvTemp.close()
                 characterEquip.append(buy)
-                charInvTemp = open("charInvTemp.pkl","bw")
+                charInvTemp = open(".\\temp\\charInvTemp.pkl","bw")
                 pickle.dump(characterEquip, charInvTemp)
                 charInvTemp.close()
                 print("You now have " + str(charGold) + " gold.")
@@ -64,7 +64,7 @@ def buy(npcName):
 
 def sell(npcName):
     if getNPCType(npcName) == 'merchant':
-        charInvTemp = open("charInvTemp.pkl","rb")  #Get items in char. inventory
+        charInvTemp = open(".\\temp\\charInvTemp.pkl","rb")  #Get items in char. inventory
         characterEquip = pickle.load(charInvTemp)
         charInvTemp.close()
         if len(characterEquip) > 0 and characterEquip[0] != '':
@@ -76,7 +76,7 @@ def sell(npcName):
             if sell in characterEquip and sell != '':
                 price = gI.itemPrices[sell]
                 print("You sell the " + sell + ".")
-                tempPickleGold = open("tempPickleGold.pkl","rb")
+                tempPickleGold = open(".\\temp\\tempPickleGold.pkl","rb")
                 charGold = pickle.load(tempPickleGold)
                 tempPickleGold.close()
                 for i in range(len(characterEquip)):
@@ -86,14 +86,14 @@ def sell(npcName):
                     else:
                         pass
                 charGold = charGold + price
-                tempPickleGold = open("tempPickleGold.pkl","bw")
+                tempPickleGold = open(".\\temp\\tempPickleGold.pkl","bw")
                 pickle.dump(charGold, tempPickleGold)
                 tempPickleGold.close()
-                charInvTemp = open("charInvTemp.pkl","rb")  #Get items in char. inventory
+                charInvTemp = open(".\\temp\\charInvTemp.pkl","rb")  #Get items in char. inventory
                 characterEquip = pickle.load(charInvTemp)
                 charInvTemp.close()
                 characterEquip.remove(sell)
-                charInvTemp = open("charInvTemp.pkl","bw")
+                charInvTemp = open(".\\temp\\charInvTemp.pkl","bw")
                 pickle.dump(characterEquip, charInvTemp)
                 charInvTemp.close()
                 print("You now have " + str(charGold) + " gold.")

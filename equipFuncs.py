@@ -4,7 +4,7 @@ def isEquippable(globalItem, action):
     equippedType = []
     equipBool = ''
     itemType = gameItems.itemType[globalItem]
-    tempPickleEquipped = open("tempPickleEquipped.pkl","rb")  
+    tempPickleEquipped = open(".\\temp\\tempPickleEquipped.pkl","rb")  
     fileEquipped = pickle.load(tempPickleEquipped)
     tempPickleEquipped.close()
     #print(fileEquipped)
@@ -17,7 +17,7 @@ def isEquippable(globalItem, action):
             equippedType.append(localType)
             c += 1
             
-        charInvTemp = open("charInvTemp.pkl","rb")                          #Get items in char. inventory
+        charInvTemp = open(".\\temp\\charInvTemp.pkl","rb")                          #Get items in char. inventory
         characterEquip = pickle.load(charInvTemp)
         charInvTemp.close()
         
@@ -35,15 +35,15 @@ def isEquippable(globalItem, action):
                     characterEquip.append("")
                 else:
                     pass
-                charInvTemp = open("charInvTemp.pkl","bw")                  #Dump inventory list to pickle
+                charInvTemp = open(".\\temp\\charInvTemp.pkl","bw")                  #Dump inventory list to pickle
                 pickle.dump(characterEquip, charInvTemp)        
                 charInvTemp.close()
 
-                tempPickleEquipped = open("tempPickleEquipped.pkl","rb")    #Dump equipped list to pickle 
+                tempPickleEquipped = open(".\\temp\\tempPickleEquipped.pkl","rb")    #Dump equipped list to pickle 
                 tempEquippedItems = pickle.load(tempPickleEquipped)
                 tempPickleEquipped.close()
                 tempEquippedItems.append(globalItem)                        #Add equipped item to equip list
-                tempPickleEquipped = open("tempPickleEquipped.pkl","bw")    #Dump equipped list to pickle 
+                tempPickleEquipped = open(".\\temp\\tempPickleEquipped.pkl","bw")    #Dump equipped list to pickle 
                 pickle.dump(tempEquippedItems,tempPickleEquipped)
                 tempPickleEquipped.close()
                 print("You " + action + " the " + globalItem + ".")
@@ -58,20 +58,20 @@ def isEquippable(globalItem, action):
             print("There was a problem with finding that item in your inventory.")
     else:
         print("Nothing is equipped.")
-        charInvTemp = open("charInvTemp.pkl","rb")                          #Get items in char. inventory
+        charInvTemp = open(".\\temp\\charInvTemp.pkl","rb")                          #Get items in char. inventory
         characterEquip = pickle.load(charInvTemp)
         charInvTemp.close()
         if globalItem in characterEquip:
             characterEquip.remove(globalItem)                               #Remove equipped item from inventory pickle
-            charInvTemp = open("charInvTemp.pkl","bw")                      #Dump inventory list to pickle
+            charInvTemp = open(".\\temp\\charInvTemp.pkl","bw")                      #Dump inventory list to pickle
             pickle.dump(characterEquip, charInvTemp)        
             charInvTemp.close()
             
-            tempPickleEquipped = open("tempPickleEquipped.pkl","rb")        #Dump equipped list to pickle 
+            tempPickleEquipped = open(".\\temp\\tempPickleEquipped.pkl","rb")        #Dump equipped list to pickle 
             tempEquippedItems = pickle.load(tempPickleEquipped)
             tempPickleEquipped.close()
             tempEquippedItems.append(globalItem)                            #Add equipped item to equip list
-            tempPickleEquipped = open("tempPickleEquipped.pkl","bw")        #Dump equipped list to pickle 
+            tempPickleEquipped = open(".\\temp\\tempPickleEquipped.pkl","bw")        #Dump equipped list to pickle 
             pickle.dump(tempEquippedItems,tempPickleEquipped)
             tempPickleEquipped.close()
             
