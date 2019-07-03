@@ -173,8 +173,8 @@ def giveEquipment():
         characterEquip.append('lock picking kit')
         characterEquip.append('rope')
         newGold = (roll.rollDice(2, 6))*10
-    saveFileName = name.lower().replace(" ", "") + "SaveFile"
-    file = shelve.open(currentLoc + "\\charsaves\\" + saveFileName)
+    saveFileName = ".\\charsaves\\" + name.lower().replace(" ", "") + "SaveFile"
+    file = shelve.open(saveFileName)                #Load character
     file["gold"] = newGold
     file.close()
     #Create gold pickle
@@ -246,8 +246,8 @@ def saveCharacter():
     tempNPCs = pickle.load(tempPickleNPCs)
     tempPickleNPCs.close()
     
-    saveFileName = name.lower().replace(" ", "") + "SaveFile"
-    file = shelve.open(currentLoc + "\\charsaves\\" + saveFileName)
+    saveFileName = ".\\charsaves\\" + name.lower().replace(" ", "") + "SaveFile"
+    file = shelve.open(saveFileName)                #Load character
     file["name"] = name
     file["strength"] = characterStats[0]
     file["intelligence"] = characterStats[1]

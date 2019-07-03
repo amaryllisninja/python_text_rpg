@@ -55,7 +55,8 @@ def loadCharModule():
             print("Loading character...")
             time.sleep(1)
 
-            characterLoaded = shelve.open(currentLoc + "\\charsaves\\" + loadCharName + "SaveFile")
+            saveFileName = ".\\charsaves\\" + loadCharName.lower().replace(" ", "") + "SaveFile"
+            characterLoaded = shelve.open(saveFileName)                #Load character
 
             name = characterLoaded["name"]
             strength = characterLoaded["strength"]

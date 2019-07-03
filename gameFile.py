@@ -11,8 +11,8 @@ name = pickle.load(file)
 time.sleep(2)
 
 print("\n\n\nGame Loading...\n\n\n")
-saveFileName = name.lower().replace(" ", "") + "SaveFile"
-charFile = shelve.open(currentLoc + "\\charsaves\\" + saveFileName)         #Load character
+saveFileName = ".\\charsaves\\" + name.lower().replace(" ", "") + "SaveFile"
+charFile = shelve.open(saveFileName)                #Load character
 location = charFile["location"]                     #Load character location
 characterEquip = charFile["inventory"]              #Load character inventory
 charGold = charFile["gold"]                         #Load character gold

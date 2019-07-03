@@ -3,7 +3,7 @@ import pickle
 from math import trunc
 
 def addXP(name, monster):
-    tempPickleXP = open("tempPickleXP.pkl", "rb")
+    tempPickleXP = open(".\\temp\\tempPickleXP.pkl", "rb")
     charXP = pickle.load(tempPickleXP)
     tempPickleXP.close()
     oldLevel = checkLevel(charXP)
@@ -11,7 +11,7 @@ def addXP(name, monster):
     if monster != '':
         monXP = gMon.monsterXP[monster]                     #Get Monster's experience points
         newCharXP = charXP + monXP                          #Add XP to character's xp total
-        tempPickleXP = open("tempPickleXP.pkl", "bw")
+        tempPickleXP = open(".\\temp\\tempPickleXP.pkl", "bw")
         pickle.dump(newCharXP, tempPickleXP)                #Save XP to pickle 
         tempPickleXP.close()
         newLevel = checkLevel(newCharXP)

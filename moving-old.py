@@ -39,7 +39,7 @@ def canMove(moveDirection, directionsOpen):
 # Start of moving code *******************************************************   
 file = shelve.open("solaireSaveFile")  #Change to character name string later
 location = file["location"]
-tempPickleLoc = open("tempPickleLoc.pkl","bw") #Temporary file to store location in
+tempPickleLoc = open(".\\temp\\tempPickleLoc.pkl","bw") #Temporary file to store location in
 directionsOpen = rooms.directionsOpen[location].split()
 roomsConnectedTo = rooms.roomsConnectedTo[location].split()
 
@@ -52,7 +52,7 @@ time.sleep(1)
 print(roomsConnectedTo)
 
 while True:
-    tempPickleLoc = open("tempPickleLoc.pkl","bw")
+    tempPickleLoc = open(".\\temp\\tempPickleLoc.pkl","bw")
 
     print("Which direction do you go?")
     moveDirection = input().lower()
@@ -62,9 +62,9 @@ while True:
     pickle.dump(location, tempPickleLoc)
     print("After moving, you are now in room " + str(location))
 
-    tempPickleLoc = open("tempPickleLoc.pkl","rb")
+    tempPickleLoc = open(".\\temp\\tempPickleLoc.pkl","rb")
     location = pickle.load(tempPickleLoc)
-    tempPickleLoc = open("tempPickleLoc.pkl","bw")
+    tempPickleLoc = open(".\\temp\\tempPickleLoc.pkl","bw")
     pickle.dump(location,tempPickleLoc)
 
     location = int(location)

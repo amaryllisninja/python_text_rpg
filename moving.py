@@ -1,6 +1,6 @@
 # Moving from room to room
 def canMove(moveDirection, directionsOpen, roomsConnectedTo, name):
-    tempPickleLoc = open("tempPickleLoc.pkl","rb")
+    tempPickleLoc = open(".\\temp\\tempPickleLoc.pkl","rb")
     location = pickle.load(tempPickleLoc)
     tempPickleLoc.close()
     if moveDirection == 'n' and moveDirection == directionsOpen[0]:

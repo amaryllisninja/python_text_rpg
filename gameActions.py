@@ -8,9 +8,10 @@ import leveling as lvl
 
 def save(name):
     print("Saving...")
-    charSaveFile = shelve.open(name + "SaveFile")
+    saveFileName = ".\\charsaves\\" + name.lower().replace(" ", "") + "SaveFile"
+    charSaveFile = shelve.open(saveFileName)                #Load character
     
-    charStatsTemp = open("charStatsTemp.pkl","rb")
+    charStatsTemp = open(".\\temp\\charStatsTemp.pkl","rb")
     fileStats = pickle.load(charStatsTemp)
     #print(fileStats)
     charSaveFile["strength"] = fileStats[0]
@@ -18,57 +19,57 @@ def save(name):
     charSaveFile["dexterity"] = fileStats[2]
     charStatsTemp.close()
     
-    charInvTemp = open("charInvTemp.pkl","rb")
+    charInvTemp = open(".\\temp\\charInvTemp.pkl","rb")
     fileInv = pickle.load(charInvTemp)
     charSaveFile["inventory"] = fileInv
     #print(fileInv)
     charInvTemp.close()
 
-    tempPickleGold = open("tempPickleGold.pkl","rb")
+    tempPickleGold = open(".\\temp\\tempPickleGold.pkl","rb")
     charGold = pickle.load(tempPickleGold)
     charSaveFile["gold"] = charGold
     tempPickleGold.close()
 
-    timePickleXP = open("tempPickleXP.pkl", "rb")
+    timePickleXP = open(".\\temp\\tempPickleXP.pkl", "rb")
     charXP = pickle.load(timePickleXP)
     charSaveFile["experience"] = charXP
     timePickleXP.close()
     
-    tempPickleLoc = open("tempPickleLoc.pkl","rb")
+    tempPickleLoc = open(".\\temp\\tempPickleLoc.pkl","rb")
     fileLoc = pickle.load(tempPickleLoc)
     charSaveFile["location"] = fileLoc
     tempPickleLoc.close()
 
-    tempPickleItems = open("tempPickleItems.pkl","rb")
+    tempPickleItems = open(".\\temp\\tempPickleItems.pkl","rb")
     fileItems = pickle.load(tempPickleItems)
     charSaveFile["roomItems"] = fileItems
     tempPickleItems.close()
 
-    tempPickleEquipped = open("tempPickleEquipped.pkl","rb")  
+    tempPickleEquipped = open(".\\temp\\tempPickleEquipped.pkl","rb")  
     fileEquipped = pickle.load(tempPickleEquipped)
     charSaveFile["equipped"] = fileEquipped
     tempPickleEquipped.close()
     #print(fileEquipped)
 
-    tempPickleDC = open("tempPickleDC.pkl","rb")
+    tempPickleDC = open(".\\temp\\tempPickleDC.pkl","rb")
     fileDC = pickle.load(tempPickleDC)
     charSaveFile["deathCount"] = fileDC
     tempPickleDC.close()
 
     #Get current live monsters in room for character
-    tempPickleMonsters = open("tempPickleMonsters.pkl","rb")    
+    tempPickleMonsters = open(".\\temp\\tempPickleMonsters.pkl","rb")    
     tempRoomMonsters = pickle.load(tempPickleMonsters)
     charSaveFile["roomMonsters"] = tempRoomMonsters
     tempPickleMonsters.close()
 
     #Get current dead monsters in room for character
-    tempPickleDeadMon = open("tempPickleDeadMon.pkl","rb")
+    tempPickleDeadMon = open(".\\temp\\tempPickleDeadMon.pkl","rb")
     tempDeadMonsters = pickle.load(tempPickleDeadMon)
     charSaveFile["deadMonsters"] = tempDeadMonsters
     tempPickleDeadMon.close()
 
     #Get current looted monsters in room for character
-    tempPickleLootedMon = open("tempPickleLootedMon.pkl","rb")
+    tempPickleLootedMon = open(".\\temp\\tempPickleLootedMon.pkl","rb")
     tempLootedMonsters = pickle.load(tempPickleLootedMon) 
     charSaveFile["lootedMonsters"] = tempLootedMonsters
     tempPickleLootedMon.close()
@@ -81,7 +82,7 @@ def save(name):
     
 # Moving from room to room
 def canMove(moveDirection, directionsOpen, roomsConnectedTo, name):
-    tempPickleLoc = open("tempPickleLoc.pkl","rb")
+    tempPickleLoc = open(".\\temp\\tempPickleLoc.pkl","rb")
     location = pickle.load(tempPickleLoc)
     tempPickleLoc.close()
     if moveDirection == 'n' and moveDirection == directionsOpen[0]:
@@ -108,7 +109,7 @@ def canMove(moveDirection, directionsOpen, roomsConnectedTo, name):
 
 # Start of moving code
 def move(name):
-    tempPickleLoc = open("tempPickleLoc.pkl","rb")
+    tempPickleLoc = open(".\\temp\\tempPickleLoc.pkl","rb")
     location = pickle.load(tempPickleLoc)
     tempPickleLoc.close()
     directionsOpen = rooms.directionsOpen[location].split()
@@ -127,14 +128,14 @@ def move(name):
     location = int(location)
     directionsOpen = rooms.directionsOpen[location].split()
     roomsConnectedTo = rooms.roomsConnectedTo[int(location)].split()
-    tempPickleLoc = open("tempPickleLoc.pkl","bw")                          #Temporary file to store location in
+    tempPickleLoc = open(".\\temp\\tempPickleLoc.pkl","bw")                          #Temporary file to store location in
     pickle.dump(location,tempPickleLoc)                                     #Save location to pickle
     tempPickleLoc.close()
     return
 
 
 def moveTo(name,moveDirection):
-    tempPickleLoc = open("tempPickleLoc.pkl","rb")
+    tempPickleLoc = open(".\\temp\\tempPickleLoc.pkl","rb")
     location = pickle.load(tempPickleLoc)
     tempPickleLoc.close()
     directionsOpen = rooms.directionsOpen[location].split()
@@ -147,12 +148,12 @@ def moveTo(name,moveDirection):
     location = int(location)
     directionsOpen = rooms.directionsOpen[location].split()
     roomsConnectedTo = rooms.roomsConnectedTo[int(location)].split()
-    tempPickleLoc = open("tempPickleLoc.pkl","bw")                          #Temporary file to store location in
+    tempPickleLoc = open(".\\temp\\tempPickleLoc.pkl","bw")                          #Temporary file to store location in
     pickle.dump(location,tempPickleLoc)                                     #Save location to pickle
     tempPickleLoc.close()
     
     itemsBoolean = checkRoom.checkRoomItems()                               #Display room items, if any
-    itemsBoolPlk = open("itemsBoolPlk.pkl","bw")                            #Save boolean for existence of items
+    itemsBoolPlk = open(".\\temp\\itemsBoolPlk.pkl","bw")                            #Save boolean for existence of items
     pickle.dump(itemsBoolean,itemsBoolPlk)
     itemsBoolPlk.close()
 
@@ -167,22 +168,22 @@ def checkAction(name):
     print("\nWhat do you do?")                                              #Asks for initial input
     action = input().lower().split()
     action.append("")
-    tempPickleItems = open("tempPickleItems.pkl","rb")                      #Get current items in rooms for character
+    tempPickleItems = open(".\\temp\\tempPickleItems.pkl","rb")                      #Get current items in rooms for character
     tempRoomItems = pickle.load(tempPickleItems)
     tempPickleItems.close()
-    tempPickleMonsters = open("tempPickleMonsters.pkl","rb")                #Get current monsters in rooms for character
+    tempPickleMonsters = open(".\\temp\\tempPickleMonsters.pkl","rb")                #Get current monsters in rooms for character
     tempRoomMonsters = pickle.load(tempPickleMonsters)
     tempPickleMonsters.close()
-    tempPickleDeadMon = open("tempPickleDeadMon.pkl","rb")                  #Get current dead monsters "
+    tempPickleDeadMon = open(".\\temp\\tempPickleDeadMon.pkl","rb")                  #Get current dead monsters "
     tempDeadMon = pickle.load(tempPickleDeadMon)
     tempPickleDeadMon.close()
-    tempPickleLootedMon = open("tempPickleLootedMon.pkl","rb")              #Get current looted monsters
+    tempPickleLootedMon = open(".\\temp\\tempPickleLootedMon.pkl","rb")              #Get current looted monsters
     tempLootedMonsters = pickle.load(tempPickleLootedMon) 
     tempPickleLootedMon.close()
-    tempPickleGold = open("tempPickleGold.pkl","rb")
+    tempPickleGold = open(".\\temp\\tempPickleGold.pkl","rb")
     charGold = pickle.load(tempPickleGold)
     tempPickleGold.close()
-    tempPickleNPCs = open("tempPickleNPCs.pkl","rb")
+    tempPickleNPCs = open(".\\temp\\tempPickleNPCs.pkl","rb")
     tempNPCs = pickle.load(tempPickleNPCs)
     tempPickleNPCs.close()
 
@@ -191,7 +192,7 @@ def checkAction(name):
         if action[1] == '' or action[2] == 'room':
             print("You look around you.\n")
             time.sleep(1)
-            tempPickleLoc = open("tempPickleLoc.pkl","rb")
+            tempPickleLoc = open(".\\temp\\tempPickleLoc.pkl","rb")
             location = pickle.load(tempPickleLoc)
             tempPickleLoc.close()
             print(rooms.roomNames[int(location)] + "\n" + rooms.roomDescriptions[int(location)])
@@ -203,10 +204,10 @@ def checkAction(name):
             del action[0]
             action = ' '.join(action)
             action = action[:-1]
-            tempPickleInv = open("charInvTemp.pkl","rb")
+            tempPickleInv = open(".\\temp\\charInvTemp.pkl","rb")
             inventory = pickle.load(tempPickleInv)
             tempPickleInv.close()
-            tempPickleLoc = open("tempPickleLoc.pkl","rb")
+            tempPickleLoc = open(".\\temp\\tempPickleLoc.pkl","rb")
             location = pickle.load(tempPickleLoc)
             tempPickleLoc.close()
             if action in inventory:
@@ -235,7 +236,8 @@ def checkAction(name):
             elif action == '' or action == ' ':
                 print("Please tell me what you want to look at.")
             elif action == 'self':
-                charSaveFile = shelve.open(name + "SaveFile")
+                saveFileName = ".\\charsaves\\" + name.lower().replace(" ", "") + "SaveFile"
+                charSaveFile = shelve.open(saveFileName)                #Load character
                 fileName = charSaveFile["name"]
                 fileStrength = charSaveFile["strength"]
                 fileIntelligence = charSaveFile["intelligence"]
@@ -246,14 +248,14 @@ def checkAction(name):
                 fileExperience = charSaveFile["experience"]
                 level = lvl.checkLevel(fileExperience)
 
-                tempPickleEquipped = open("tempPickleEquipped.pkl","rb")    #Load equipped list 
+                tempPickleEquipped = open(".\\temp\\tempPickleEquipped.pkl","rb")    #Load equipped list 
                 tempEquipped = pickle.load(tempPickleEquipped)
                 tempPickleEquipped.close()
 
-                tempHealthFile = open("tempHealthFile.pkl","rb")            #Load temp health
+                tempHealthFile = open(".\\temp\\tempHealthFile.pkl","rb")            #Load temp health
                 tempHP = pickle.load(tempHealthFile)
                 tempHealthFile.close()
-                tempMagicFile = open("tempMagicFile.pkl","rb")              #Load temp magic
+                tempMagicFile = open(".\\temp\\tempMagicFile.pkl","rb")              #Load temp magic
                 tempMP = pickle.load(tempMagicFile)
                 tempMagicFile.close()
                 
@@ -314,13 +316,13 @@ def checkAction(name):
 
     #Process to follow for 'get'
     elif action[0] in cmdList.getCmdList:
-        itemsBoolPlk = open("itemsBoolPlk.pkl","rb")                        #Boolean to see if items are in room
+        itemsBoolPlk = open(".\\temp\\itemsBoolPlk.pkl","rb")                        #Boolean to see if items are in room
         itemsBoolean = pickle.load(itemsBoolPlk)
         itemsBoolPlk.close()
-        tempPickleItems = open("tempPickleItems.pkl","rb")                  #Get current items in rooms for character
+        tempPickleItems = open(".\\temp\\tempPickleItems.pkl","rb")                  #Get current items in rooms for character
         tempRoomItems = pickle.load(tempPickleItems)
         tempPickleItems.close()
-        charInvTemp = open("charInvTemp.pkl","rb")                          #Get items in char. inventory
+        charInvTemp = open(".\\temp\\charInvTemp.pkl","rb")                          #Get items in char. inventory
         characterEquip = pickle.load(charInvTemp)
         charInvTemp.close()
         
@@ -329,7 +331,7 @@ def checkAction(name):
             if action[1] == '':
                 print(action[0].title() + " what?")
             else:
-                tempPickleLoc = open("tempPickleLoc.pkl","rb")
+                tempPickleLoc = open(".\\temp\\tempPickleLoc.pkl","rb")
                 location = pickle.load(tempPickleLoc)
                 tempPickleLoc.close()
                 item = []
@@ -347,11 +349,11 @@ def checkAction(name):
                 if item in tempRoomItems[location]:
                     print("You " + action[0] + " the " + item + ".")
                     characterEquip.append(item)
-                    charInvTemp = open("charInvTemp.pkl","bw")
+                    charInvTemp = open(".\\temp\\charInvTemp.pkl","bw")
                     pickle.dump(characterEquip, charInvTemp)
                     charInvTemp.close()
                     tempRoomItems[location].remove(item)
-                    tempPickleItems = open("tempPickleItems.pkl","bw")  
+                    tempPickleItems = open(".\\temp\\tempPickleItems.pkl","bw")  
                     pickle.dump(tempRoomItems,tempPickleItems)
                     tempPickleItems.close()
                     time.sleep(2)
@@ -377,17 +379,17 @@ def checkAction(name):
 
     #Process to follow for 'drop'
     elif action[0] in cmdList.dropCmdList:      
-        tempPickleItems = open("tempPickleItems.pkl","rb")                  #Get current items in rooms for character
+        tempPickleItems = open(".\\temp\\tempPickleItems.pkl","rb")                  #Get current items in rooms for character
         tempRoomItems = pickle.load(tempPickleItems)
         tempPickleItems.close()
-        charInvTemp = open("charInvTemp.pkl","rb")                          #Get items in char. inventory
+        charInvTemp = open(".\\temp\\charInvTemp.pkl","rb")                          #Get items in char. inventory
         characterEquip = pickle.load(charInvTemp)
         charInvTemp.close()
 
         if action[1] == '':
             print(action[0].title() + " what?")
         else:
-            tempPickleLoc = open("tempPickleLoc.pkl","rb")
+            tempPickleLoc = open(".\\temp\\tempPickleLoc.pkl","rb")
             location = pickle.load(tempPickleLoc)
             tempPickleLoc.close()
             item = []
@@ -405,11 +407,11 @@ def checkAction(name):
             if item in characterEquip:
                 print("You " + action[0] + " the " + item + ".")
                 characterEquip.remove(item)
-                charInvTemp = open("charInvTemp.pkl","bw")
+                charInvTemp = open(".\\temp\\charInvTemp.pkl","bw")
                 pickle.dump(characterEquip, charInvTemp)
                 charInvTemp.close()
                 tempRoomItems[location].append(item)
-                tempPickleItems = open("tempPickleItems.pkl","bw")  
+                tempPickleItems = open(".\\temp\\tempPickleItems.pkl","bw")  
                 pickle.dump(tempRoomItems,tempPickleItems)
                 tempPickleItems.close()
                 time.sleep(2)
@@ -419,10 +421,10 @@ def checkAction(name):
 
     #Process to follow for 'equip'            
     elif action[0] in cmdList.equipCmdList:
-        charInvTemp = open("charInvTemp.pkl","rb")                          #Get items in char. inventory
+        charInvTemp = open(".\\temp\\charInvTemp.pkl","rb")                          #Get items in char. inventory
         characterEquip = pickle.load(charInvTemp)
         charInvTemp.close()
-        tempPickleEquipped = open("tempPickleEquipped.pkl","rb")            #Load items equipped
+        tempPickleEquipped = open(".\\temp\\tempPickleEquipped.pkl","rb")            #Load items equipped
         tempEquippedItems = pickle.load(tempPickleEquipped)
         tempPickleEquipped.close()
         #print(tempEquippedItems)
@@ -452,10 +454,10 @@ def checkAction(name):
 
     #Process to follow for 'unequip'
     elif action[0] in cmdList.unequipCmdList:
-        charInvTemp = open("charInvTemp.pkl","rb")                          #Get items in char. inventory
+        charInvTemp = open(".\\temp\\charInvTemp.pkl","rb")                          #Get items in char. inventory
         characterEquip = pickle.load(charInvTemp)
         charInvTemp.close()
-        tempPickleEquipped = open("tempPickleEquipped.pkl","rb")            #Load items equipped
+        tempPickleEquipped = open(".\\temp\\tempPickleEquipped.pkl","rb")            #Load items equipped
         tempEquippedItems = pickle.load(tempPickleEquipped)
         tempPickleEquipped.close()
         #print(tempEquippedItems)
@@ -478,12 +480,12 @@ def checkAction(name):
             if item in tempEquippedItems:                                   #If item is in character inventory
                 print("You " + action[0] + " the " + item + ".")
                 characterEquip.append(item)                                 #Add equipped item to inventory pickle
-                charInvTemp = open("charInvTemp.pkl","bw")      
+                charInvTemp = open(".\\temp\\charInvTemp.pkl","bw")      
                 pickle.dump(characterEquip, charInvTemp)
                 charInvTemp.close()
 
                 tempEquippedItems.remove(item)                              #Remove equipped item from equip list
-                tempPickleEquipped = open("tempPickleEquipped.pkl","bw")    #Dump equipped list to pickle 
+                tempPickleEquipped = open(".\\temp\\tempPickleEquipped.pkl","bw")    #Dump equipped list to pickle 
                 pickle.dump(tempEquippedItems,tempPickleEquipped)
                 tempPickleEquipped.close()
                 time.sleep(2)
@@ -511,7 +513,7 @@ def checkAction(name):
 
     #Process to follow for 'talk'
     elif action[0] in cmdList.talkCmdList:
-        tempPickleLoc = open("tempPickleLoc.pkl","rb")
+        tempPickleLoc = open(".\\temp\\tempPickleLoc.pkl","rb")
         location = pickle.load(tempPickleLoc)
         tempPickleLoc.close()
         if action[1] == '':
@@ -546,7 +548,7 @@ def checkAction(name):
                 print(action[2].title() + " isn\'t in here.")
 
     elif action[0] == 'sell':
-        tempPickleLoc = open("tempPickleLoc.pkl","rb")
+        tempPickleLoc = open(".\\temp\\tempPickleLoc.pkl","rb")
         location = pickle.load(tempPickleLoc)
         tempPickleLoc.close()
         if len(action) >= 4:
@@ -558,7 +560,7 @@ def checkAction(name):
             print("Sell to whom?")
             
     elif action[0] == 'buy':
-        tempPickleLoc = open("tempPickleLoc.pkl","rb")
+        tempPickleLoc = open(".\\temp\\tempPickleLoc.pkl","rb")
         location = pickle.load(tempPickleLoc)
         tempPickleLoc.close()
         if len(action) >= 4:
@@ -572,7 +574,7 @@ def checkAction(name):
 
     #Process to follow for 'use', 'eat', or 'drink'
     elif action[0] in cmdList.useCmdList:
-        charInvTemp = open("charInvTemp.pkl","rb")  #Get items in char. inventory
+        charInvTemp = open(".\\temp\\charInvTemp.pkl","rb")  #Get items in char. inventory
         inventory = pickle.load(charInvTemp)
         charInvTemp.close()
         if action[1] == '':
@@ -591,7 +593,7 @@ def checkAction(name):
                 if gI.itemType[item] in gI.useTypes:
                     uI.useItem(item, name)
                     inventory.remove(item)
-                    charInvTemp = open("charInvTemp.pkl","bw")
+                    charInvTemp = open(".\\temp\\charInvTemp.pkl","bw")
                     pickle.dump(inventory, charInvTemp)
                     charInvTemp.close()
                 else:

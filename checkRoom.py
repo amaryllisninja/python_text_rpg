@@ -5,10 +5,10 @@ from collections import Counter
 
 def checkRoomItems():
     #Get current location
-    tempPickleLoc = open("tempPickleLoc.pkl","rb")
+    tempPickleLoc = open(".\\temp\\tempPickleLoc.pkl","rb")
     room = pickle.load(tempPickleLoc)
     tempPickleLoc.close()
-    tempPickleItems = open("tempPickleItems.pkl","rb")  #Get current items in rooms for character
+    tempPickleItems = open(".\\temp\\tempPickleItems.pkl","rb")  #Get current items in rooms for character
     tempRoomItems = pickle.load(tempPickleItems)
     tempPickleItems.close()
     roomItems = tempRoomItems[room]
@@ -22,16 +22,16 @@ def checkRoomItems():
 #Check room for monsters
 def checkRoomMonsters():
     #Get current location
-    tempPickleLoc = open("tempPickleLoc.pkl","rb")
+    tempPickleLoc = open(".\\temp\\tempPickleLoc.pkl","rb")
     room = pickle.load(tempPickleLoc)
     tempPickleLoc.close()
     #Get current monsters in rooms for character
-    tempPickleMonsters = open("tempPickleMonsters.pkl","rb")  
+    tempPickleMonsters = open(".\\temp\\tempPickleMonsters.pkl","rb")  
     tempRoomMonsters = pickle.load(tempPickleMonsters)
     tempPickleMonsters.close()
     roomMonsters = tempRoomMonsters[room]
     #Get current dead monsters in rooms for character
-    tempPickleDeadMon = open("tempPickleDeadMon.pkl","rb")
+    tempPickleDeadMon = open(".\\temp\\tempPickleDeadMon.pkl","rb")
     tempDeadMonsters = pickle.load(tempPickleDeadMon)
     tempPickleDeadMon.close()
     deadMonsters = tempDeadMonsters[room]
@@ -50,10 +50,10 @@ def checkRoomMonsters():
 
 def checkRoomNPCs():
     #Get current location
-    tempPickleLoc = open("tempPickleLoc.pkl","rb")
+    tempPickleLoc = open(".\\temp\\tempPickleLoc.pkl","rb")
     room = pickle.load(tempPickleLoc)
     tempPickleLoc.close()
-    tempPickleNPCs = open("tempPickleNPCs.pkl","rb")
+    tempPickleNPCs = open(".\\temp\\tempPickleNPCs.pkl","rb")
     tempNPCs = pickle.load(tempPickleNPCs)
     tempPickleNPCs.close()
     roomNPCs = tempNPCs[room]
