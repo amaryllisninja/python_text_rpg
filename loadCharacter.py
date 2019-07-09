@@ -70,6 +70,7 @@ def loadCharModule():
             stats = [strength, intelligence, dexterity]
             health = characterLoaded["health"]
             magic = characterLoaded["magic"]
+            fileExperience = characterLoaded["experience"]
             characterEquipped = characterLoaded["equipped"]
 
             fileStats = open(".\\temp\\charStatsTemp.pkl","bw")

@@ -30,7 +30,7 @@ def checkLevel(xp):
 
 def checkLevelUp(name, oldLevel, newLevel):
     if newLevel > oldLevel:
-        print("You have leveled up!\nYou are now level " + newLevel + "\n\n")
+        print("You have leveled up!\nYou are now level " + str(newLevel) + "\n\n")
         time.sleep(1)
         levelChar(name, newLevel)
     else:

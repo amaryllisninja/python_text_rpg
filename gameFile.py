@@ -8,7 +8,7 @@ loadCharModule()
 file = open(".\\temp\\tempCharName.pkl","rb")                #Load character name
 name = pickle.load(file)
 #print(name)
-time.sleep(2)
+time.sleep(1)
 
 print("\n\n\nGame Loading...\n\n\n")
 saveFileName = ".\\charsaves\\" + name.lower().replace(" ", "") + "SaveFile"
@@ -18,18 +18,22 @@ characterEquip = charFile["inventory"]              #Load character inventory
 charGold = charFile["gold"]                         #Load character gold
 health = charFile["health"]                         #Load character HP
 magic = charFile["magic"]                           #Load character MP
-fileEquipped = charFile["equipped"]                 #Load equipped items
-tempPickleEquipped = open(".\\temp\\tempPickleEquipped.pkl","bw")  
-pickle.dump(fileEquipped,tempPickleEquipped)
-tempPickleEquipped.close()
+fileEquipped = charFile["equipped"]                 #Load character equipped items
+charXP = charFile["experience"]
 
 ####### Reload all values to clear unsaved pickle values #######
-fileHP = open(".\\temp\\charHealthTemp.pkl","bw")            #Load HP
+fileHP = open(".\\temp\\charHealthTemp.pkl","bw")                   #Load HP
 pickle.dump(health, fileHP)
 fileHP.close()
-fileMP = open(".\\temp\\charMagicTemp.pkl","bw")             #Load MP
+fileMP = open(".\\temp\\charMagicTemp.pkl","bw")                    #Load MP
 pickle.dump(magic, fileMP)
 fileMP.close()
+tempPickleEquipped = open(".\\temp\\tempPickleEquipped.pkl","bw")   #Load equipped  
+pickle.dump(fileEquipped,tempPickleEquipped)
+tempPickleEquipped.close()
+tempPickleXP = open(".\\temp\\tempPickleXP.pkl", "rb")              #Load XP
+charXP = pickle.load(tempPickleXP)
+tempPickleXP.close()
 
 print("You are standing in the " + rooms.roomNames[location])
 time.sleep(1)
