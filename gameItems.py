@@ -298,7 +298,6 @@ wearTypes = (       #Wearable items
 )
 
 useTypes = (        #Usable items
-    'item',
     'tool',
     'potion',
     'book',
@@ -306,6 +305,11 @@ useTypes = (        #Usable items
     'climb',
     'unlock',
     'food'
+)
+
+craftTypes = (
+    'item',
+    'material' #?
 )
 
 weaponHitDice = {   #Number of dice and number of sides on dice

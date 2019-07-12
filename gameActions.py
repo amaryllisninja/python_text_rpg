@@ -597,7 +597,7 @@ def checkAction(name):
                     pickle.dump(inventory, charInvTemp)
                     charInvTemp.close()
                 else:
-                    print("You cannot use " + item + " right now.\n")
+                    print("You cannot use " + item + ".\n")
             else:
                 print("You do not have a " + item + " in your inventory.\n")
 
