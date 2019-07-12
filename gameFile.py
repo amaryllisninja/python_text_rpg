@@ -34,6 +34,7 @@ tempPickleEquipped.close()
 tempPickleXP = open(".\\temp\\tempPickleXP.pkl", "rb")              #Load XP
 charXP = pickle.load(tempPickleXP)
 tempPickleXP.close()
+time.sleep(1)
 
 print("You are standing in the " + rooms.roomNames[location])
 time.sleep(1)

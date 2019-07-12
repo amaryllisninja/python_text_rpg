@@ -16,6 +16,7 @@ def addXP(name, monster):
         tempPickleXP.close()
         newLevel = checkLevel(newCharXP)
         checkLevelUp(name, oldLevel, newLevel)
+        print("\nAdded " + str(monXP) + " experience points. You now have " + str(newCharXP) + " experience points.")
     else:
         print("Could not obtain monster name and info.")
 
@@ -23,8 +24,10 @@ def addXP(name, monster):
 def checkLevel(xp):
     if xp == 0:
         level = 0
-    else:
+    elif xp != 0:
         level = trunc((xp/2000) + 1)
+    else:
+        print("An error occured while checking level.")
     return level
 
 

@@ -70,7 +70,7 @@ def loadCharModule():
             stats = [strength, intelligence, dexterity]
             health = characterLoaded["health"]
             magic = characterLoaded["magic"]
-            fileExperience = characterLoaded["experience"]
+            experience = characterLoaded["experience"]
             characterEquipped = characterLoaded["equipped"]
 
             fileStats = open(".\\temp\\charStatsTemp.pkl","bw")
@@ -87,11 +87,12 @@ def loadCharModule():
             print("Dexterity: " + dexterity)
             print("Health Points: " + ''.join(health))
             print("Magic Points: " + ''.join(magic))
-            print("Your character's profession is " + profession)
+            print("Experience Points: " + str(experience))
+            print("Your character's profession is " + profession + "\n")
             print(name + "'s inventory: ")
             print('\n'.join(inventory))
             print(str(gold) + " gold")
-            print("Equipped Items: ")
+            print("\nEquipped Items: ")
             print('\n'.join(characterEquipped))
             print("Current location: " + rooms.roomNames[location])
 
