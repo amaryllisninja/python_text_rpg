@@ -237,36 +237,38 @@ def checkAction(name):
                 print("Please tell me what you want to look at.")
             elif action == 'self':
                 saveFileName = ".\\charsaves\\" + name.lower().replace(" ", "") + "SaveFile"
-                charSaveFile = shelve.open(saveFileName)                #Load character
+                charSaveFile = shelve.open(saveFileName)                            #Load character
                 fileName = charSaveFile["name"]
-                fileStrength = charSaveFile["strength"]
-                fileIntelligence = charSaveFile["intelligence"]
-                fileDexterity = charSaveFile["dexterity"]
-                fileHealth = charSaveFile["health"]
-                fileMagic = charSaveFile["magic"]
                 fileProfession = charSaveFile["profession"]
-                fileExperience = charSaveFile["experience"]
-                level = lvl.checkLevel(fileExperience)
 
-                tempPickleEquipped = open(".\\temp\\tempPickleEquipped.pkl","rb")    #Load equipped list 
+                charStatsTemp = open(".\\temp\\charStatsTemp.pkl","rb")             #Load character stats 
+                charStats = pickle.load(charStatsTemp)
+                charStatsTemp.close()
+                
+                tempPickleXP = open(".\\temp\\tempPickleXP.pkl","rb")               #Load character experience 
+                fileExperience = pickle.load(tempPickleXP)
+                tempPickleXP.close()                
+                level = lvl.checkLevel(fileExperience)                              #Load level
+                
+                tempPickleEquipped = open(".\\temp\\tempPickleEquipped.pkl","rb")   #Load equipped list 
                 tempEquipped = pickle.load(tempPickleEquipped)
                 tempPickleEquipped.close()
 
-                tempHealthFile = open(".\\temp\\tempHealthFile.pkl","rb")            #Load temp health
+                tempHealthFile = open(".\\temp\\tempHealthFile.pkl","rb")           #Load temp health
                 tempHP = pickle.load(tempHealthFile)
                 tempHealthFile.close()
-                tempMagicFile = open(".\\temp\\tempMagicFile.pkl","rb")              #Load temp magic
+                tempMagicFile = open(".\\temp\\tempMagicFile.pkl","rb")             #Load temp magic
                 tempMP = pickle.load(tempMagicFile)
                 tempMagicFile.close()
                 
                 charSaveFile.close()
                 print("You look at yourself.")
                 time.sleep(1)
-                print("\nYour strength is " + fileStrength)
-                print("Your intelligence is " + fileIntelligence)
-                print("Your dexterity is " + fileDexterity)
-                print("Your health points are ", ''.join(fileHealth))
-                print("Your magic points are ", ''.join(fileMagic))
+                print("\nYour strength is " + str(charStats[0]))
+                print("Your intelligence is " + str(charStats[1]))
+                print("Your dexterity is " + str(charStats[2]))
+                print("Your health points are ", ''.join(tempHP))
+                print("Your magic points are ", ''.join(tempMP))
                 print("You are a " + fileProfession)
                 print("You are level ", level)
                 print("You have " + str(fileExperience) + " experience points.")

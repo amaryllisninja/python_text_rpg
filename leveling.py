@@ -1,5 +1,5 @@
 import gameMonsters as gMon
-import pickle
+import pickle, time
 from math import trunc
 
 def addXP(name, monster):

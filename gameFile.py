@@ -1,9 +1,10 @@
 # Complete game module
-import random, time, pickle, shelve, gameItems, rooms, gameActions, checkRoom, dialogue, os
+import random, time, pickle, shelve, gameItems, rooms, gameActions, checkRoom, dialogue, os, traceback
 from loadCharacter import loadCharModule
 
-currentLoc = os.getcwd
+currentLoc = os.getcwd 
 
+###################### Start Game Initialization ######################
 try:
     loadCharModule()
     file = open(".\\temp\\tempCharName.pkl","rb")                #Load character name
@@ -84,12 +85,25 @@ try:
 
     print("")
 
-    while True:
+except:
+    errorLogFile = open('.\\temp\\errorLog.txt', 'a')
+    errorLogFile.write('\n***************** Error in initialization *******************\n')
+    errorLogFile.write(traceback.format_exc() + '\n\n')
+    errorLogFile.close()
+    print('Error occurred and was written to \\temp\\errorLog.txt')
+    print('Please reference last Error listed and send in for review.')
+
+###################### End Game Initialization ######################
+
+
+try:
+    while True:                             # Start main game play
         gameActions.checkAction(name)
 
-except Exception as ex:
-    errorLogFile = open(currentLoc + '\\errorLog.txt')
-    errorLogFile.write('************ NEW ERROR ************')
-    errorLogFile.write(ex)
+except:
+    errorLogFile = open('.\\temp\\errorLog.txt', 'a')
+    errorLogFile.write('\n***************** Error in game play *******************\n')
+    errorLogFile.write(traceback.format_exc() + '\n\n')
     errorLogFile.close()
-
+    print('Error occurred and was written to \\temp\\errorLog.txt')
+    print('Please reference last Error listed and send in for review.')
