@@ -49,7 +49,7 @@ print("equip")
 print("hold")
 print("wield")
 print("wear")
-print("Example: wear wizard robes")
+print("Example: wear thaumaturge robes")
 
 print("\n\nUnequipping Items")
 print("-------------------")

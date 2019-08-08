@@ -374,11 +374,11 @@ def getMonStat(monster, statFullName):
     return statValue
 
 def checkProfession(profession):
-    if profession == 'fighter':
+    if profession == 'mercenary':
         mainStat = 'strength'
     elif profession == 'thief':
         mainStat = 'dexterity'
-    elif profession == 'wizard':
+    elif profession == 'thaumaturge':
         mainStat = 'intelligence'
     else:
         print("There was a problem. Could not find profession.")

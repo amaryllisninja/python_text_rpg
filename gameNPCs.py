@@ -50,7 +50,7 @@ npcStats = {    # Str, Int, Dex, HP, MP, AC
 
 npcItems = {
     'guard':['plate armor', 'short sword', 'large shield', 'healing potion'],
-    'alchemist':['healing potion', 'healing potion', 'healing potion', 'wizard robes', 'dagger'],
+    'alchemist':['healing potion', 'healing potion', 'healing potion', 'thaumaturge robes', 'dagger'],
     'shopkeeper':['rope', 'short sword'],
     'baker':['fresh bread', 'chefs hat'],
     'townsfolk':['dagger'],

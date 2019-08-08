@@ -85,17 +85,17 @@ def rollDice(chatacterStats):
 
 # Start of profession code
 def characterProf():
-    print("\nYour character can be a 'fighter', 'wizard', or 'thief'.")
+    print("\nYour character can be an 'mercenary', 'thaumaturge', 'thief'.")
     print("Type 'info' for more information about professions.")
     print("What is your character's profession?")
     profession = input().lower()
 
     if profession == 'info':
-        print("Fighter is a strength based profession. If you have a high \nstrength, fighter is a good profession to choose.")
-        print("Wizard is a intelligence based profession. If you have a \nhigh intelligence, wizard is a good profession to choose.")
+        print("Mercenary is a strength based profession. If you have a high \nstrength, mercenary is a good profession to choose.")
+        print("Thaumaturge is a intelligence based profession. If you have a \nhigh intelligence, thaumaturge is a good profession to choose.")
         print("Thief is a dexterity based profession. If you have a high \ndexterity, thief is a good profession to choose.")
         time.sleep(4)
-        print("\nYour character can be a 'fighter', 'wizard', or 'thief'.")
+        print("\nYour character can be a 'mercenary', 'thaumaturge', or 'thief'.")
         print("Type 'info' for more information about professions.")
         print("What is your character's profession?")
         profession = input().lower()
@@ -104,7 +104,7 @@ def characterProf():
     correct = input()
 
     while correct != 'y':
-        print("\nYour character can be a 'fighter', 'wizard', or 'thief'.")
+        print("\nYour character can be a 'mercenary', 'thaumaturge', or 'thief'.")
         print("What is your character's profession?")
         profession = input().lower()        
         print("You've selected " + profession + " as your profession. Is this correct? (y/n)")
@@ -113,15 +113,15 @@ def characterProf():
     return profession
 
 def checkProfession(profession):
-    if profession == 'fighter':
-        print("\nFighters can use any weapon, shield, or armor. They cannot cast spells or use wands.")
-        print("As a fighter, your strength will affect how much damage your weapons will deal \nand whether or not you can hit your opponent.")
+    if profession == 'mercenary':
+        print("\nmercenarys can use any weapon, shield, or armor. They cannot cast spells or use wands.")
+        print("As a mercenary, your strength will affect how much damage your weapons will deal \nand whether or not you can hit your opponent.")
         print("Your starting equipment will be a short sword, a small shield, and padded armor.\n")
         time.sleep(6)
-    elif profession == 'wizard':
-        print("\nWizards can cast any spell, but can only use small weapons and light armor.")
-        print("As a wizard, intelligence will affect what spells you can cast and how many you can memorize.")
-        print("Your starting equipment will be a dagger, a spell book, wizard robes, and a pointed hat.\n")
+    elif profession == 'thaumaturge':
+        print("\nthaumaturges can cast any spell, but can only use small weapons and light armor.")
+        print("As a thaumaturge, intelligence will affect what spells you can cast and how many you can memorize.")
+        print("Your starting equipment will be a dagger, a spell book, thaumaturge robes, and a pointed hat.\n")
         time.sleep(6)
     elif profession == 'thief':
         print("\nThiefs can use any light or medium weapon, small and medium shields, and wear light or medium armor.")
@@ -157,15 +157,15 @@ def character():
 
 # Equipment assignment based on profession
 def giveEquipment():
-    if profession == 'fighter':
+    if profession == 'mercenary':
         characterEquip.append('short sword')
         characterEquip.append('small shield')
         characterEquip.append('padded armor')
         newGold = (roll.rollDice(5, 4))*10
-    elif profession == 'wizard':
+    elif profession == 'thaumaturge':
         characterEquip.append('dagger')
         characterEquip.append('spell book')
-        characterEquip.append('wizard robes')
+        characterEquip.append('thaumaturge robes')
         characterEquip.append('pointed hat')
         newGold = ((roll.rollDice(1, 4))+1)*10
     elif profession == 'thief':
