@@ -85,18 +85,9 @@ try:
 
     print("")
 
-except:
-    errorLogFile = open('.\\temp\\errorLog.txt', 'a')
-    errorLogFile.write('\n***************** Error in initialization *******************\n')
-    errorLogFile.write(traceback.format_exc() + '\n\n')
-    errorLogFile.close()
-    print('Error occurred and was written to \\temp\\errorLog.txt')
-    print('Please reference last Error listed and send in for review.')
-
 ###################### End Game Initialization ######################
 
 
-try:
     while True:                             # Start main game play
         gameActions.checkAction(name)
 
@@ -105,5 +96,3 @@ except:
     errorLogFile.write('\n***************** Error in game play *******************\n')
     errorLogFile.write(traceback.format_exc() + '\n\n')
     errorLogFile.close()
-    print('Error occurred and was written to \\temp\\errorLog.txt')
-    print('Please reference last Error listed and send in for review.')
