@@ -13,6 +13,8 @@ itemNames = (
     'thaumaturge robes',
     'pointed hat',
     'small shield',
+    'medium shield',
+    'large shield',
     'spell book',
     'lock picking kit',
     'rope',
@@ -252,37 +254,37 @@ itemDescriptions = {
 }
 
 itemType = {
-    'short sword':'weapon',
-    'dagger':'weapon',
-    'padded armor':'armor',
-    'leather armor':'armor',
-    'studded armor':'armor',
-    'scalemail':'armor',
-    'chainmail':'armor',
-    'banded armor':'armor',
-    'splintmail':'armor',
-    'plate armor':'armor',
+    'short sword':      'weapon',
+    'dagger':           'weapon',
+    'padded armor':     'armor',
+    'leather armor':    'armor',
+    'studded armor':    'armor',
+    'scalemail':        'armor',
+    'chainmail':        'armor',
+    'banded armor':     'armor',
+    'splintmail':       'armor',
+    'plate armor':      'armor',
     'thaumaturge robes':'clothes',
-    'pointed hat':'hat',
-    'small shield':'shield',
-    'medium shield':'shield',
-    'large shield':'shield',
-    'spell book':'book',
-    'lock picking kit':'unlock',
-    'rope':'climb',
-    'healing potion':'potion',
-    'water':'potion',
-    'dusty bread':'food',
-    'fresh bread':'food',
-    'muffin':'food',
-    'cake':'food',
-    'small toy':'item',
-    'chefs hat':'hat',
-    'mana potion':'potion',
-    'silken thread':'item',
-    'sharp teeth':'item',
-    'moldy cheese':'food',
-    'blood orange':'food'    
+    'pointed hat':      'hat',
+    'small shield':     'shield',
+    'medium shield':    'shield',
+    'large shield':     'shield',
+    'spell book':       'book',
+    'lock picking kit': 'unlock',
+    'rope':             'climb',
+    'healing potion':   'potion',
+    'water':            'potion',
+    'dusty bread':      'food',
+    'fresh bread':      'food',
+    'muffin':           'food',
+    'cake':             'food',
+    'small toy':        'item',
+    'chefs hat':        'hat',
+    'mana potion':      'potion',
+    'silken thread':    'item',
+    'sharp teeth':      'item',
+    'moldy cheese':     'food',
+    'blood orange':     'food'    
 }
 
 wieldTypes = (      #Wieldable items
@@ -313,44 +315,44 @@ craftTypes = (
 )
 
 weaponHitDice = {   #Number of dice and number of sides on dice
-    'short sword':'1 6',
-    'dagger':'1 4'
+    'short sword':  '1 6',
+    'dagger':       '1 4'
 }
 
 weaponStat = {
-    'short sword':'strength',
-    'dagger':'dexterity'
+    'short sword':  'strength',
+    'dagger':       'dexterity'
 }
 
 armorClass = {
-    'padded armor':'1',
+    'padded armor': '1',
     'leather armor':'2',
     'studded armor':'3',
-    'scalemail':'4',
-    'chainmail':'5',
-    'banded armor':'6',
-    'splintmail':'7',
-    'plate armor':'8',
-    'small shield':'1',
+    'scalemail':    '4',
+    'chainmail':    '5',
+    'banded armor': '6',
+    'splintmail':   '7',
+    'plate armor':  '8',
+    'small shield': '1',
     'medium shield':'2',
-    'large shield':'3'
+    'large shield': '3'
 }
 
 wearables = {
-    'padded armor':'armor',
-    'leather armor':'armor',
-    'studded armor':'armor',
-    'scalemail':'armor',
-    'chainmail':'armor',
-    'banded armor':'armor',
-    'splintmail':'armor',
-    'plate armor':'armor',
+    'padded armor':     'armor',
+    'leather armor':    'armor',
+    'studded armor':    'armor',
+    'scalemail':        'armor',
+    'chainmail':        'armor',
+    'banded armor':     'armor',
+    'splintmail':       'armor',
+    'plate armor':      'armor',
     'thaumaturge robes':'clothes',
-    'pointed hat':'hat',
-    'small shield':'shield',
-    'medium shield':'shield',
-    'large shield':'shield',
-    'chefs hat':'hat'
+    'pointed hat':      'hat',
+    'small shield':     'shield',
+    'medium shield':    'shield',
+    'large shield':     'shield',
+    'chefs hat':        'hat'
 }
 
 itemPrices = {
@@ -400,7 +402,25 @@ consumableInfo = {
     'blood orange':['magic', 10]
 }
 
-
+minReqs = {
+    # str, int, dex
+    'short sword':[6, 1, 4],
+    'dagger':[4, 1, 4],
+    'padded armor':[4, 1, 1],
+    'leather armor':[6, 1, 2],
+    'studded armor':[8, 1, 4],
+    'scalemail':[10, 1, 6],
+    'chainmail':[12, 1, 8],
+    'banded armor':[14, 1, 10],
+    'splintmail':[16, 1, 12],
+    'plate armor':[18, 1, 14],
+    'small shield':[2, 1, 1],
+    'medium shield':[6, 1, 2],
+    'large shield':[10, 1, 4],
+    'spell book':[1, 8, 1],
+    'lock picking kit':[1, 4, 8],
+    'rope':[8, 1, 6],
+}
 
 
 

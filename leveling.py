@@ -27,7 +27,10 @@ def checkLevel(xp):
     elif xp != 0:
         level = trunc((xp/2000) + 1)
     else:
-        print("An error occured while checking level.")
+        errorLogFile = open('.\\temp\\errorLog.txt', 'a')
+        errorLogFile.write('\n***************** Error in leveling *******************\n')
+        errorLogFile.write('An error occured while checking level.')
+        errorLogFile.close()
     return level
 
 
@@ -41,4 +44,17 @@ def checkLevelUp(name, oldLevel, newLevel):
 
 
 def levelChar(name, newLevel):
-    pass
+    saveFileName = ".\\charsaves\\" + name.lower().replace(" ", "") + "SaveFile"
+    charFile = shelve.open(saveFileName)                #Load character
+    profession = charFile["profession"]    
+    if profession == 'mercenary':
+        print("You are a mercenary. You ")
+    if profession == 'thaumaturge':
+        print("You are a thaumaturge. ")
+    if profession == 'thief':
+        print("You are a thief. ")
+    else:
+        errorLogFile = open('.\\temp\\errorLog.txt', 'a')
+        errorLogFile.write('\n***************** Error in leveling *******************\n')
+        errorLogFile.write('An error occured while checking profession.')
+        errorLogFile.close()
