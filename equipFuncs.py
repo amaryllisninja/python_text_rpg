@@ -7,7 +7,10 @@ def isEquippable(globalItem, action):
     tempPickleEquipped = open(".\\temp\\tempPickleEquipped.pkl","rb")  
     fileEquipped = pickle.load(tempPickleEquipped)
     tempPickleEquipped.close()
-    canEquip = checkMinReqs(globalItem)
+    if globalItem in gameItems.minReqs:
+        canEquip = checkMinReqs(globalItem)
+    else:
+        canEquip = True
     
     if canEquip == True: 
         if len(fileEquipped) != 0 or fileEquipped != [] or fileEquipped != ():
