@@ -44,7 +44,7 @@ def rollDice(chatacterStats):
         characterStats[0] = random.randint(3, 18)                       #Roll str
         characterStats[1] = random.randint(3, 18)                       #Roll int
         characterStats[2] = random.randint(3, 18)                       #Roll dex
-        characterStats[3] = characterStats[0] + characterStats[2]       #Roll HP
+        characterStats[3] = characterStats[0] + characterStats[2]       #Calc HP
         characterStats[4] = random.randint(1, 6) + characterStats[1]    #Roll MP
 
         characterStats[0] = str(characterStats[0])
@@ -114,12 +114,12 @@ def characterProf():
 
 def checkProfession(profession):
     if profession == 'mercenary':
-        print("\nmercenarys can use any weapon, shield, or armor. They cannot cast spells or use wands.")
+        print("\nMercenarys can use any weapon, shield, or armor. They cannot cast spells or use wands.")
         print("As a mercenary, your strength will affect how much damage your weapons will deal \nand whether or not you can hit your opponent.")
         print("Your starting equipment will be a short sword, a small shield, and padded armor.\n")
         time.sleep(6)
     elif profession == 'thaumaturge':
-        print("\nthaumaturges can cast any spell, but can only use small weapons and light armor.")
+        print("\nThaumaturges can cast any spell, but can only use small weapons and light armor.")
         print("As a thaumaturge, intelligence will affect what spells you can cast and how many you can memorize.")
         print("Your starting equipment will be a dagger, a spell book, thaumaturge robes, and a pointed hat.\n")
         time.sleep(6)
@@ -327,10 +327,13 @@ while playState == 'y':
     characterEquipped = []
     playState = 'y'
     name = 'name'
-    newGold = 0
     name = characterName()
     rollDice(characterStats)
     profession = charProfSelect()
+    
+    tempPickleGold = open(".\\temp\\tempPickleGold.pkl","rb")
+    newGold = pickle.load(tempPickleGold)
+    tempPickleGold.close()
 
     print("You've completed your character!")
     time.sleep(1)
