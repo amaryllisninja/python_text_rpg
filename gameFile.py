@@ -31,10 +31,10 @@ try:
     pickle.dump(magic, fileMP)
     fileMP.close()
     tempPickleEquipped = open(".\\temp\\tempPickleEquipped.pkl","bw")   #Load equipped  
-    pickle.dump(fileEquipped,tempPickleEquipped)
+    pickle.dump(fileEquipped, tempPickleEquipped)
     tempPickleEquipped.close()
-    tempPickleXP = open(".\\temp\\tempPickleXP.pkl", "rb")              #Load XP
-    charXP = pickle.load(tempPickleXP)
+    tempPickleXP = open(".\\temp\\tempPickleXP.pkl", "bw")              #Load XP
+    pickle.dump(charXP, tempPickleXP)
     tempPickleXP.close()
     time.sleep(1)
 
